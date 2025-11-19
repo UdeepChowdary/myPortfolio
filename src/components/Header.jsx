@@ -4,7 +4,6 @@ const Header = () => {
   return (
     <header className="hero">
       <div className="hero-top-row">
-        <div className="hero-logo">Udeep Chowdary Naripeddi</div>
         <nav className="hero-nav" aria-label="Primary">
           <a href="#about">About</a>
           <a href="#projects">Projects</a>
@@ -14,7 +13,7 @@ const Header = () => {
       <div className="hero-main">
         <div className="hero-heading-group">
           <div className="hero-pill">CS student</div>
-          <h1>Udeep</h1>
+          <h1>Udeep Chowdary Naripeddi</h1>
           <p className="subtitle">Computer Science Student exploring AI, LLMs & Data Science</p>
         </div>
         <div className="hero-intro">
