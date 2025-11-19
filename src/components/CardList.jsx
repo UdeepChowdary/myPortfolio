@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
+import useInViewAnimation from '../hooks/useInViewAnimation';
 
 const CardList = () => {
   const [cards, setCards] = useState([]);
   const [error, setError] = useState(null);
+  const { ref, isVisible } = useInViewAnimation();
 
   useEffect(() => {
     fetch('/cards.json')
@@ -21,7 +23,11 @@ const CardList = () => {
   }, []);
 
   return (
-    <section id="projects">
+    <section
+      id="projects"
+      ref={ref}
+      className={`reveal ${isVisible ? 'reveal-visible' : ''}`}
+    >
       <h2>My Interests</h2>
       {error && <p className="error">{error}</p>}
       <div className="card-grid">

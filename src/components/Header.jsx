@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <header className="hero">
       <div className="hero-top-row">
-        <div className="hero-logo">Udeep</div>
+        <div className="hero-logo">Udeep Chowdary Naripeddi</div>
         <nav className="hero-nav" aria-label="Primary">
           <a href="#about">About</a>
           <a href="#projects">Projects</a>
@@ -13,16 +13,16 @@ const Header = () => {
       </div>
       <div className="hero-main">
         <div className="hero-heading-group">
-          <div className="hero-pill">Full Stack Developer</div>
+          <div className="hero-pill">CS student</div>
           <h1>Udeep</h1>
-          <p className="subtitle">Full Stack Developer & Creative Enthusiast</p>
+          <p className="subtitle">Computer Science Student exploring AI, LLMs & Data Science</p>
         </div>
         <div className="hero-intro">
           <p>
-            I’m a Full Stack Developer who loves turning ideas into delightful, usable web experiences. I focus on
-            component-driven React apps, clean responsive layouts, and accessible UI. I enjoy learning new tools,
-            shipping projects, and solving problems — whether it’s building a responsive website or crafting a small,
-            performant web app.
+            I’m a Computer Science Engineering student at SRM University (Kalvium program), focusing on AI, Large
+            Language Models (LLMs), and Data Science. I enjoy building projects that combine clean, thoughtful
+            interfaces with powerful AI-driven backends — from intelligent assistants to tools that help people make
+            better decisions.
           </p>
         </div>
         <div className="hero-actions">

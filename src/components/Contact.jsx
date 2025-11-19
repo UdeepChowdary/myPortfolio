@@ -1,8 +1,15 @@
 import React from 'react';
+import useInViewAnimation from '../hooks/useInViewAnimation';
 
 const Contact = () => {
+  const { ref, isVisible } = useInViewAnimation();
+
   return (
-    <section id="contact" className="contact-section">
+    <section
+      id="contact"
+      ref={ref}
+      className={`contact-section reveal ${isVisible ? 'reveal-visible' : ''}`}
+    >
       <h2>Let’s build something together</h2>
       <p>
         Interested in collaborating, hiring, or just saying hi? I’m always open to discussing new projects, ideas, and
