@@ -10,7 +10,10 @@ const Contact = () => {
       ref={ref}
       className={`contact-section reveal ${isVisible ? 'reveal-visible' : ''}`}
     >
-      <h2>Let’s build something together</h2>
+      <h2 className="section-heading">
+        <span className="section-icon section-icon-alt" aria-hidden="true" />
+        Let’s build something together
+      </h2>
       <p>
         Interested in collaborating, hiring, or just saying hi? I’m always open to discussing new projects, ideas, and
         opportunities.

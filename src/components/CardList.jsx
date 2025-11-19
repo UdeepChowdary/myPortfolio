@@ -28,7 +28,10 @@ const CardList = () => {
       ref={ref}
       className={`reveal ${isVisible ? 'reveal-visible' : ''}`}
     >
-      <h2>My Interests</h2>
+      <h2 className="section-heading">
+        <span className="section-icon" aria-hidden="true" />
+        My Interests
+      </h2>
       {error && <p className="error">{error}</p>}
       <div className="card-grid">
         {cards.map((card) => (

@@ -197,8 +197,48 @@ section h2 {
   text-align: left;
 }
 
+.section-heading {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.4rem;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), transparent);
+  transition: width 0.25s ease;
+}
+
+section:hover .section-heading::after {
+  width: 60%;
+}
+
+.section-icon {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, var(--primary-color), rgba(0, 123, 255, 0.1));
+  flex-shrink: 0;
+}
+
+.section-icon-alt {
+  background: radial-gradient(circle, #20c997, rgba(32, 201, 151, 0.1));
+}
+
+.section-icon-warm {
+  background: radial-gradient(circle, #fd7e14, rgba(253, 126, 20, 0.12));
+}
+
 .featured-section {
   padding-top: 3.5rem;
+  background: linear-gradient(180deg, rgba(0, 123, 255, 0.04), transparent 60%);
+  border-radius: 1.25rem;
 }
 
 .featured-card {
@@ -215,6 +255,8 @@ section h2 {
 /* Achievements */
 .achievements-section {
   padding-top: 3.5rem;
+  background-color: rgba(0, 0, 0, 0.015);
+  border-radius: 1.25rem;
 }
 
 .achievements-list {
@@ -231,6 +273,7 @@ section h2 {
   border-radius: var(--radius-md);
   background-color: var(--card-bg);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid rgba(0, 123, 255, 0.35);
 }
 
 .achievement-main {
@@ -359,6 +402,22 @@ section h2 {
 .cta-button:hover {
   transform: translateY(-2px);
   opacity: 1;
+}
+
+.cta-button::after,
+.hero-btn.primary::after,
+.featured-links .hero-btn.primary::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.9em;
+  transition: transform 0.2s ease;
+}
+
+.cta-button:hover::after,
+.hero-btn.primary:hover::after,
+.featured-links .hero-btn.primary:hover::after {
+  transform: translateX(2px);
 }
 
 /* Footer */

@@ -30,7 +30,10 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--bg-color);
+  background:
+    radial-gradient(circle at top left, rgba(0, 123, 255, 0.12), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(58, 157, 255, 0.1), transparent 55%),
+    var(--bg-color);
   color: var(--text-color);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

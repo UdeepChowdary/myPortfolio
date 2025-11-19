@@ -10,7 +10,10 @@ const Achievements = () => {
       ref={ref}
       className={`achievements-section reveal ${isVisible ? 'reveal-visible' : ''}`}
     >
-      <h2>Achievements</h2>
+      <h2 className="section-heading">
+        <span className="section-icon section-icon-alt" aria-hidden="true" />
+        Achievements
+      </h2>
       <ul className="achievements-list">
         <li className="achievement-item">
           <div className="achievement-main">

@@ -10,7 +10,10 @@ const About = () => {
       ref={ref}
       className={`about-section reveal ${isVisible ? 'reveal-visible' : ''}`}
     >
-      <h2>About Me</h2>
+      <h2 className="section-heading">
+        <span className="section-icon" aria-hidden="true" />
+        About Me
+      </h2>
       <p>
         I’m a Computer Science Engineering student at SRM University, currently part of the Kalvium program — an
         industry-aligned track focused on real-world software engineering from day one. I have a solid foundation in
