@@ -10,14 +10,22 @@ const Footer = () => {
           © {currentYear} Udeep. Built with React + Vite.
         </p>
         <div className="social-links">
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/UdeepChowdary" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.linkedin.com/in/udeep-chowdary-naripeddi"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             LinkedIn
           </a>
-          <a href="#" target="_blank" rel="noopener noreferrer">
-            Twitter
+          <a
+            href="https://app.kalvium.community/showcase/udeepchowdary5194"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Kalvium Showcase
           </a>
         </div>
       </div>
