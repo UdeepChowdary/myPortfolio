@@ -1,0 +1,34 @@
+.app {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Atmospheric Glow Background (Static Base) */
+.bg-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 15% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(45, 212, 191, 0.08) 0%, transparent 25%);
+  pointer-events: none;
+}
+
+/* Dynamic Mouse Spotlight */
+.cursor-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(124, 58, 237, 0.06),
+      transparent 40%);
+  pointer-events: none;
+  transition: background 0.1s ease;
+}
