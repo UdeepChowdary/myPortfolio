@@ -5,7 +5,7 @@ import './Projects.css';
 const projectsData = [
     {
         title: 'Derm-AI',
-        description: 'An AI-powered skin disease detector using Computer Vision. Analyses skin images to provide preliminary diagnosis and health insights.',
+        description: '🏆 3rd Place at AIFT Summer Challenge. An AI-powered skin disease detector using Computer Vision to analyze images and provide health insights.',
         tags: ['Python', 'TensorFlow', 'React', 'Computer Vision'],
         link: 'https://derm-ai-eight-ashen.vercel.app/',
         github: 'https://github.com/UdeepChowdary/derm_ai'

@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Web Development",
+    "description": "Building modern, responsive websites and web apps using React and modern CSS techniques.",
+    "image": "https://placehold.co/600x400/007bff/white?text=Web+Dev",
+    "alt": "Screenshot of code editor with JavaScript code",
+    "tags": ["React", "JavaScript"]
+  },
+  {
+    "title": "Photography",
+    "description": "Capturing moments and experimenting with natural light and color to create visual stories.",
+    "image": "https://placehold.co/600x400/28a745/white?text=Photography",
+    "alt": "Retro camera and colorful lighting setup",
+    "tags": ["Creative", "Visual Arts"]
+  },
+  {
+    "title": "Fitness & Health",
+    "description": "Committed to daily fitness and mindful nutrition — routines that keep me productive and focused.",
+    "image": "https://placehold.co/600x400/dc3545/white?text=Fitness",
+    "alt": "Person exercising on a yoga mat",
+    "tags": ["Wellness", "Lifestyle"]
+  },
+  {
+    "title": "Mini Projects / Demos",
+    "description": "Small web apps and UI experiments showcasing problem-solving, styling, and React fundamentals.",
+    "image": "https://placehold.co/600x400/ffc107/black?text=Demos",
+    "alt": "Collage of web app screenshots",
+    "tags": ["Projects", "Demos"]
+  }
+]
