@@ -14,7 +14,7 @@ const Hero = () => {
                     <h1>
                         Hi, I'm Udeep <br />
                         Chowdary Naripeddi <br />
-                        <span className="gradient-text type-writer">AI Engineer & Developer</span>
+                        <span className="gradient-text type-writer">AI Engineer</span>
                     </h1>
                     <p className="hero-description">
                         Computer Science student proficient in MERN stack and Python.
