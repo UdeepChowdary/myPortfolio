@@ -1,43 +1,78 @@
-<<<<<<< HEAD
-# React + Vite
+# My Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive portfolio website built to showcase my projects, skills, and experience.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend Framework:** React
+- **Build Tool:** Vite
+- **Styling:** CSS (53.3%), JavaScript (53.3%), HTML (1.3%)
+- **Language Composition:**
+  - JavaScript: 53.3%
+  - CSS: 45.4%
+  - HTML: 1.3%
 
-## React Compiler
+## 📋 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Responsive design that works on all devices
+- Fast performance with Vite build optimization
+- Component-based architecture using React
+- Smooth user experience with modern web standards
+- Clean and maintainable codebase
 
-## Expanding the ESLint configuration
+## 🛠️ Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# Project: Portfolio Card Website
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
 
-**Built with:** React + Vite
-
-### How to run locally:
+### Installation & Running Locally
 
 ```bash
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
 ```
 
-Open http://localhost:5173 in your browser.
+Open [http://localhost:5173](http://localhost:5173) in your browser to see the portfolio.
 
-### Build & deploy:
+### Build for Production
 
 ```bash
 npm run build
 ```
 
-Deploy the `dist` folder to your hosting provider (e.g., Netlify, Vercel, GitHub Pages).
+This creates an optimized production build in the `dist` folder.
 
-### Description:
+### Deployment
 
-A simple, responsive portfolio showcasing skills and interests using a reusable Card component that reads data from `cards.json`. Cards are keyboard accessible and styled with CSS variables for easy theming.
->>>>>>> 68e3649e0285e4283bc000eddda1d83e543985ee
+Deploy the `dist` folder to your hosting provider:
+- [Netlify](https://www.netlify.com/)
+- [Vercel](https://vercel.com/)
+- [GitHub Pages](https://pages.github.com/)
+- Or any static hosting service
+
+## 📁 Project Structure
+
+```
+myPortfolio/
+├── src/
+│   ├── components/     # React components
+│   ├── pages/          # Page components
+│   ├── styles/         # CSS files
+│   └── App.jsx         # Main app component
+├── public/             # Static assets
+├── index.html          # Entry HTML file
+├── vite.config.js      # Vite configuration
+└── package.json        # Project dependencies
+```
+
+## 📧 Contact
+
+Feel free to reach out if you'd like to collaborate or have any questions!
+
+## 📄 License
+
+This project is open source and available under the MIT License.
