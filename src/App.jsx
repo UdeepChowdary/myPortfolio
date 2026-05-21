@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Routes, Route } from 'react-router-dom';
 
@@ -14,9 +14,12 @@ import TechMarquee from './components/TechMarquee';
 import Education from './components/Education';
 import BackToTop from './components/BackToTop';
 import GithubStats from './components/GithubStats';
+import Certifications from './components/Certifications';
 import NotFound from './components/NotFound';
+import SpotlightBackground from './components/SpotlightBackground';
+import Terminal from './components/Terminal';
 
-const Home = () => (
+const Home = ({ onTerminalClick }) => (
   <>
     <Hero />
     <TechMarquee />
@@ -30,6 +33,9 @@ const Home = () => (
       <Achievements />
     </RevealOnScroll>
     <RevealOnScroll>
+      <Certifications />
+    </RevealOnScroll>
+    <RevealOnScroll>
       <Education />
     </RevealOnScroll>
     <RevealOnScroll>
@@ -38,11 +44,13 @@ const Home = () => (
     <RevealOnScroll>
       <Contact />
     </RevealOnScroll>
-    <Footer />
+    <Footer onTerminalClick={onTerminalClick} />
   </>
 );
 
 function App() {
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -50,17 +58,16 @@ function App() {
       transition={{ duration: 1.5, ease: 'easeOut' }}
       className="app"
     >
-      <div className="bg-grid" />
-      <div className="bg-grid-vignette" />
-      <div className="bg-glow"></div>
+      <SpotlightBackground />
 
       <Navbar />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home onTerminalClick={() => setIsTerminalOpen(true)} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
       <BackToTop />
     </motion.div>
   );

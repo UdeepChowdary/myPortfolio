@@ -69,6 +69,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  cursor: auto !important;
 }
 
 a {

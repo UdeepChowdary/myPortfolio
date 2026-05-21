@@ -1,7 +1,7 @@
 import React from 'react';
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, Terminal } from 'lucide-react';
 
-const Footer = () => {
+const Footer = ({ onTerminalClick }) => {
   return (
     <footer style={{
       padding: '2rem 0',
@@ -20,8 +20,15 @@ const Footer = () => {
             <Linkedin size={20} />
           </a>
         </div>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-          © {new Date().getFullYear()} Udeep. Built with React & Vite.
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+          © {new Date().getFullYear()} Udeep. Built with React & Vite. 
+          <button 
+            onClick={onTerminalClick} 
+            style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            title="Open Developer Terminal"
+          >
+            <Terminal size={14} />
+          </button>
         </p>
       </div>
     </footer>
