@@ -5,17 +5,28 @@ const SpotlightBackground = () => {
     const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 });
 
     useEffect(() => {
+        let requestRef = null;
+        let lastPosition = { x: -1000, y: -1000 };
+
+        const updatePosition = () => {
+            setMousePosition(lastPosition);
+            requestRef = null;
+        };
+
         const handleMouseMove = (e) => {
-            setMousePosition({
-                x: e.clientX,
-                y: e.clientY,
-            });
+            lastPosition = { x: e.clientX, y: e.clientY };
+            if (!requestRef) {
+                requestRef = requestAnimationFrame(updatePosition);
+            }
         };
 
         window.addEventListener('mousemove', handleMouseMove);
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
+            if (requestRef) {
+                cancelAnimationFrame(requestRef);
+            }
         };
     }, []);
 

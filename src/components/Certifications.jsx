@@ -1,28 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Award, ExternalLink, CheckCircle } from 'lucide-react';
+import { certsData } from '../data/certifications';
 import './Certifications.css';
-
-const certsData = [
-    {
-        id: 1,
-        title: "Google AI Professional Certificate",
-        issuer: "Coursera & Google",
-        date: "May 2026",
-        url: "https://coursera.org/verify/professional-cert/JPCE3SCS68EB",
-        description: "7 courses covering AI Fundamentals, Brainstorming, Research, Writing, Content Creation, Data Analysis, and App Building. Built 20+ AI artifacts and vibe coded a custom AI app.",
-        icon: "🧠"
-    },
-    {
-        id: 2,
-        title: "Google AI Essentials",
-        issuer: "Coursera & Google",
-        date: "May 2026",
-        url: "https://coursera.org/verify/specialization/TO57ECI7XTAD",
-        description: "5 courses covering Introduction to AI, Productivity with AI Tools, Prompt Engineering, Responsible AI, and Staying Ahead of AI Trends.",
-        icon: "⚡"
-    }
-];
 
 const Certifications = () => {
     return (
@@ -47,7 +27,7 @@ const Certifications = () => {
                                 </div>
                                 <div className="cert-badges">
                                     <span className="cert-date">{cert.date}</span>
-                                    <a href={cert.url} target="_blank" rel="noreferrer" className="cert-verify" title="Verify Credential">
+                                    <a href={cert.url} target="_blank" rel="noopener noreferrer" className="cert-verify" title="Verify Credential">
                                         <CheckCircle size={16} /> Verify
                                     </a>
                                 </div>
@@ -62,7 +42,7 @@ const Certifications = () => {
                                 <p>{cert.description}</p>
                             </div>
                             
-                            <a href={cert.url} target="_blank" rel="noreferrer" className="cert-link">
+                            <a href={cert.url} target="_blank" rel="noopener noreferrer" className="cert-link">
                                 View Credential <ExternalLink size={16} />
                             </a>
                         </motion.div>

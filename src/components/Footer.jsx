@@ -13,10 +13,10 @@ const Footer = ({ onTerminalClick }) => {
     }}>
       <div className="container">
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '1rem' }}>
-          <a href="https://github.com/UdeepChowdary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)' }}>
+          <a href="https://github.com/UdeepChowdary" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)' }} aria-label="GitHub Profile">
             <Github size={20} />
           </a>
-          <a href="https://www.linkedin.com/in/udeep-chowdary-naripeddi" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)' }}>
+          <a href="https://www.linkedin.com/in/udeep-chowdary-naripeddi" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)' }} aria-label="LinkedIn Profile">
             <Linkedin size={20} />
           </a>
         </div>
@@ -26,6 +26,7 @@ const Footer = ({ onTerminalClick }) => {
             onClick={onTerminalClick} 
             style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
             title="Open Developer Terminal"
+            aria-label="Open retro developer terminal"
           >
             <Terminal size={14} />
           </button>

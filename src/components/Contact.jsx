@@ -35,7 +35,8 @@ const Contact = () => {
         setErrorMsg(json?.errors?.[0]?.message || 'Something went wrong. Please try again.');
         setStatus('error');
       }
-    } catch {
+    } catch (err) {
+      console.error('Form submission network error:', err);
       setErrorMsg('Network error. Please check your connection and try again.');
       setStatus('error');
     }
@@ -88,13 +89,16 @@ const Contact = () => {
                 exit={{ opacity: 0 }}
               >
                 <div className="form-group">
-                  <input type="text" name="name" placeholder="Name" required disabled={status === 'loading'} />
+                  <label htmlFor="contact-name" className="sr-only">Your Name</label>
+                  <input id="contact-name" type="text" name="name" placeholder="Name" required disabled={status === 'loading'} />
                 </div>
                 <div className="form-group">
-                  <input type="email" name="email" placeholder="Email" required disabled={status === 'loading'} />
+                  <label htmlFor="contact-email" className="sr-only">Your Email Address</label>
+                  <input id="contact-email" type="email" name="email" placeholder="Email" required disabled={status === 'loading'} />
                 </div>
                 <div className="form-group">
-                  <textarea name="message" placeholder="Message" rows="5" required disabled={status === 'loading'} />
+                  <label htmlFor="contact-message" className="sr-only">Your Message</label>
+                  <textarea id="contact-message" name="message" placeholder="Message" rows="5" required disabled={status === 'loading'} />
                 </div>
 
                 {status === 'error' && (
