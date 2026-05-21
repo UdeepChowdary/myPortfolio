@@ -32,7 +32,7 @@ const Education = () => {
                             <h4 className="gradient-text">B.Tech in CSE (AI & Future Technologies)</h4>
                             
                             <div className="timeline-details">
-                                <p className="gpa"><Award size={16} /> <strong>CGPA:</strong> 8.96 / 10</p>
+                                <p className="gpa"><Award size={16} /> <strong>CGPA:</strong> 9.16 / 10</p>
                                 <p className="coursework">
                                     <strong>Relevant Coursework:</strong> Data Structures & Algorithms, DBMS, OOP, Operating Systems, Computer Networks
                                 </p>

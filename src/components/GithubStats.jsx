@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, Users, BookOpen } from 'lucide-react';
+import { Github, BookOpen } from 'lucide-react';
 import './GithubStats.css';
 
 const SkeletonCard = () => (
@@ -50,7 +50,6 @@ const GithubStats = () => {
                         <>
                             <SkeletonCard />
                             <SkeletonCard />
-                            <SkeletonCard />
                         </>
                     ) : (
                         <>
@@ -68,23 +67,6 @@ const GithubStats = () => {
                                 <div className="stat-info">
                                     <h3>{stats.repos}</h3>
                                     <p>Public Repositories</p>
-                                </div>
-                            </motion.a>
-
-                            {/* Followers Card */}
-                            <motion.a 
-                                href="https://github.com/UdeepChowdary?tab=followers"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="native-stat-card glass-panel"
-                                whileHover={{ y: -5 }}
-                            >
-                                <div className="stat-icon-wrapper">
-                                    <Users size={28} className="stat-icon" />
-                                </div>
-                                <div className="stat-info">
-                                    <h3>{stats.followers}</h3>
-                                    <p>Followers on GitHub</p>
                                 </div>
                             </motion.a>
 
