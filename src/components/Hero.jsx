@@ -1,12 +1,18 @@
 import React from 'react';
-import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Github, Linkedin, Mail, Download } from 'lucide-react';
 import './Hero.css';
 
 const Hero = () => {
     return (
         <section id="about" className="hero-section">
             <div className="container hero-content">
-                <div className="hero-text">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="hero-text"
+                >
                     <div className="badge glass-panel">
                         <span className="dot-indicator"></span>
                         Available for Freelance
@@ -16,15 +22,22 @@ const Hero = () => {
                         Chowdary Naripeddi <br />
                         <span className="gradient-text type-writer">AI Engineer</span>
                     </h1>
-                    <p className="hero-description">
+                    <p className="hero-description" style={{ opacity: 1, animation: 'none' }}>
                         Computer Science student proficient in MERN stack and Python.
                         Passionate about combining Full Stack development with emerging AI technologies
                         like Vector Databases and Prompt Engineering.
                     </p>
 
-                    <div className="hero-actions">
+                    <div className="hero-actions" style={{ opacity: 1, animation: 'none' }}>
                         <a href="#projects" className="btn btn-primary">
                             View Work <ArrowRight size={18} className="btn-icon" />
+                        </a>
+                        <a
+                            href="/Udeep_Chowdary_Resume.pdf"
+                            download="Udeep_Chowdary_Resume.pdf"
+                            className="btn btn-outline"
+                        >
+                            Resume <Download size={16} className="btn-icon" />
                         </a>
                         <div className="social-links">
                             <a href="https://github.com/UdeepChowdary" target="_blank" rel="noopener noreferrer" className="social-icon">
@@ -38,9 +51,14 @@ const Hero = () => {
                             </a>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="hero-visual">
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="hero-visual"
+                >
                     <div className="glow-orb orb-1"></div>
                     <div className="glow-orb orb-2"></div>
                     <div className="code-card glass-panel">
@@ -57,7 +75,7 @@ const Hero = () => {
                             <div className="line"><span className="brace">{'}'}</span>;</div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

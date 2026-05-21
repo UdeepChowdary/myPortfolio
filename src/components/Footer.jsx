@@ -6,9 +6,10 @@ const Footer = () => {
     <footer style={{
       padding: '2rem 0',
       textAlign: 'center',
-      borderTop: '1px solid rgba(255,255,255,0.05)',
+      borderTop: 'var(--glass-border)',
       marginTop: 'auto',
-      background: 'rgba(5,5,5,0.8)'
+      background: 'rgba(2, 2, 5, 0.7)',
+      backdropFilter: 'blur(20px)'
     }}>
       <div className="container">
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '1rem' }}>

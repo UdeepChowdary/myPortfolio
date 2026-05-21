@@ -10,18 +10,13 @@
 }
 
 .navbar.scrolled {
-    background: rgba(5, 5, 5, 0.85);
-    /* Slightly darker for better contrast */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(2, 2, 5, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0, 240, 255, 0.05);
 }
 
-[data-theme="light"] .navbar.scrolled {
-    background: rgba(255, 255, 255, 0.85);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
 
 .nav-content {
     height: 100%;
@@ -122,10 +117,7 @@
         transition: transform 0.3s ease-in-out;
     }
 
-    [data-theme="light"] .mobile-nav {
-        background: var(--bg-dark);
-        /* Ensure it uses variable */
-    }
+
 
     .mobile-nav.active {
         transform: translateX(0);

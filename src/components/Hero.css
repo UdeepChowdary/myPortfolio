@@ -107,7 +107,8 @@ h1 {
 .hero-actions {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
     opacity: 0;
     animation: fadeIn 1s ease 1.5s forwards;
 }

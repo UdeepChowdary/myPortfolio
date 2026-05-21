@@ -1,40 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #050505;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.07);
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
+  --bg-dark: #020205;
+  --bg-card: rgba(255, 255, 255, 0.02);
+  --bg-card-hover: rgba(255, 255, 255, 0.05);
+  --text-primary: #f0f0f5;
+  --text-secondary: #8b92a5;
 
-  --accent-primary: #7c3aed;
-  /* Violet */
-  --accent-secondary: #2dd4bf;
-  /* Teal */
-  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #2dd4bf 100%);
+  --accent-primary: #00f0ff;
+  --accent-secondary: #8a2be2;
+  --accent-gradient: linear-gradient(135deg, #00f0ff 0%, #8a2be2 100%);
 
-  --glass-border: 1px solid rgba(255, 255, 255, 0.05);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-border: 1px solid rgba(0, 240, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.05);
 
   --font-main: 'Outfit', sans-serif;
   --nav-height: 80px;
 }
 
+/* Light theme overrides */
 [data-theme="light"] {
-  --bg-dark: #f0f2f5;
-  --bg-card: rgba(255, 255, 255, 0.6);
-  --bg-card-hover: rgba(255, 255, 255, 0.8);
-  --text-primary: #1a1a1a;
-  --text-secondary: #4b5563;
-
-  /* Adjusted for contrast on light bg */
-  --accent-primary: #6d28d9;
-  --accent-secondary: #0d9488;
-  --accent-gradient: linear-gradient(135deg, #6d28d9 0%, #0d9488 100%);
-
-  --glass-border: 1px solid rgba(0, 0, 0, 0.05);
-  --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --bg-dark: #f0f2f8;
+  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-card-hover: rgba(255, 255, 255, 0.9);
+  --text-primary: #0d0d1a;
+  --text-secondary: #4a5068;
+  --glass-border: 1px solid rgba(0, 160, 200, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 160, 200, 0.05);
 }
+
+[data-theme="light"] .bg-grid::after {
+  background-image:
+    linear-gradient(rgba(0, 160, 200, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 160, 200, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(100, 43, 200, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 43, 200, 0.03) 1px, transparent 1px);
+}
+
+[data-theme="light"] .bg-grid-vignette {
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    transparent 40%,
+    rgba(240, 242, 248, 0.7) 75%,
+    rgba(240, 242, 248, 0.95) 100%
+  );
+}
+
+[data-theme="light"] .navbar.scrolled {
+  background: rgba(240, 242, 248, 0.8);
+}
+
+
 
 * {
   margin: 0;
@@ -109,28 +125,130 @@ ul {
 .btn-primary {
   background: var(--accent-gradient);
   color: white;
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+  border: 1px solid rgba(0, 240, 255, 0.4);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Scrollbar */
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.05);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 240, 255, 0.08);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 240, 255, 0.2);
+}
+
+/* Premium Neon Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--bg-dark);
+  border-left: 1px solid rgba(0, 240, 255, 0.05);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: rgba(0, 240, 255, 0.2);
   border-radius: 5px;
+  border: 2px solid var(--bg-dark); /* Adds padding feel */
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgba(0, 240, 255, 0.6);
+  border: 2px solid var(--bg-dark);
+  background-clip: padding-box;
 }
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  border-left: 1px solid rgba(0, 160, 200, 0.1);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(0, 160, 200, 0.3);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 160, 200, 0.6);
+}
+
+/* ============================================
+   ANIMATED GRID BACKGROUND
+   Pure CSS — zero JS, runs at native GPU speed
+   ============================================ */
+.bg-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Base deep background */
+.bg-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg-dark);
+}
+
+/* The animated grid lines */
+.bg-grid::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(138, 43, 226, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 43, 226, 0.018) 1px, transparent 1px);
+  background-size:
+    60px 60px,
+    60px 60px,
+    180px 180px,
+    180px 180px;
+  animation: grid-drift 25s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes grid-drift {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(60px) translateX(60px);
+  }
+}
+
+/* Radial vignette to fade grid at edges — keeps focus central */
+.bg-grid-vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -3;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    transparent 40%,
+    rgba(2, 2, 5, 0.7) 75%,
+    rgba(2, 2, 5, 0.95) 100%
+  );
+}

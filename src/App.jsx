@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
+
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
@@ -7,37 +9,34 @@ import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import RevealOnScroll from './components/RevealOnScroll';
+import TechMarquee from './components/TechMarquee';
+import Education from './components/Education';
+import BackToTop from './components/BackToTop';
 
 function App() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5, ease: 'easeOut' }}
       className="app"
-      style={{
-        '--mouse-x': `${mousePos.x}px`,
-        '--mouse-y': `${mousePos.y}px`
-      }}
     >
+      <div className="bg-grid" />
+      <div className="bg-grid-vignette" />
       <div className="bg-glow"></div>
-      <div className="cursor-spotlight"></div>
+
       <Navbar />
       <main>
         <Hero />
+        <TechMarquee />
         <RevealOnScroll>
           <Skills />
         </RevealOnScroll>
         <RevealOnScroll>
           <Achievements />
+        </RevealOnScroll>
+        <RevealOnScroll>
+          <Education />
         </RevealOnScroll>
         <RevealOnScroll>
           <Projects />
@@ -47,7 +46,8 @@ function App() {
         </RevealOnScroll>
         <Footer />
       </main>
-    </div>
+      <BackToTop />
+    </motion.div>
   );
 }
 

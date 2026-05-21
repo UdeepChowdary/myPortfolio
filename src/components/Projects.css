@@ -4,7 +4,7 @@
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: 2rem;
 }
 
@@ -45,10 +45,20 @@
 .project-links a {
     color: var(--text-secondary);
     transition: color 0.2s ease;
+    position: relative;
+    z-index: 2;
 }
 
 .project-links a:hover {
     color: var(--accent-secondary);
+}
+
+.project-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .project-content p {
@@ -74,17 +84,48 @@
 
 .card-glow {
     position: absolute;
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, transparent 60%);
     border-radius: 50%;
-    top: -75px;
-    right: -75px;
+    top: calc(var(--mouse-y, 0px) - 300px);
+    left: calc(var(--mouse-x, 0px) - 300px);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
+    z-index: 0;
 }
 
 .project-card:hover .card-glow {
     opacity: 1;
 }
+
+@media (max-width: 480px) {
+    .project-card {
+        padding: 1.5rem;
+    }
+
+    .project-header h3 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .project-card {
+        padding: 1.25rem;
+    }
+
+    .project-header {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .project-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .tag {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+}

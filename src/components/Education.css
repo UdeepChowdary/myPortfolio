@@ -1,0 +1,121 @@
+.education-section {
+    padding: 5rem 0;
+    position: relative;
+}
+
+.education-timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-left: 2.5rem;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 11px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent-primary), transparent);
+    opacity: 0.5;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    background: var(--bg-dark);
+    border: 2px solid var(--accent-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-primary);
+    z-index: 2;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+}
+
+.timeline-content {
+    padding: 2rem;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateX(5px);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-header h3 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+}
+
+.timeline-date {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--accent-secondary);
+    background: rgba(138, 43, 226, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+}
+
+.timeline-content h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.timeline-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.gpa {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+}
+
+.coursework {
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .education-timeline {
+        padding-left: 2rem;
+    }
+    
+    .timeline-dot {
+        left: -2rem;
+    }
+    
+    .timeline-header {
+        flex-direction: column;
+    }
+}

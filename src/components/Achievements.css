@@ -4,7 +4,7 @@
 
 .achievements-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
     gap: 2rem;
 }
 
@@ -55,11 +55,11 @@
     font-size: 0.85rem;
     font-weight: 700;
     color: var(--accent-secondary);
-    background: rgba(45, 212, 191, 0.1);
+    background: rgba(138, 43, 226, 0.1);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     margin-bottom: 0.75rem;
-    border: 1px solid rgba(45, 212, 191, 0.2);
+    border: 1px solid rgba(138, 43, 226, 0.25);
 }
 
 .achievement-content h3 {
@@ -99,3 +99,13 @@
         text-align: center;
     }
 }
+
+@media (max-width: 360px) {
+    .achievement-card {
+        padding: 1.25rem;
+    }
+
+    .achievement-content h3 {
+        font-size: 1.05rem;
+    }
+}
