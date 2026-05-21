@@ -25,9 +25,15 @@ const Navbar = () => {
     return (
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
             <div className="nav-content">
-                <a href="#" className="logo">
-                    U<span className="dot">.</span>
-                </a>
+                <div className="logo-container">
+                    <a href="#" className="logo">
+                        U<span className="dot">.</span>
+                    </a>
+                    <div className="status-indicator">
+                        <span className="pulse-dot"></span>
+                        <span className="status-text">Available for Work</span>
+                    </div>
+                </div>
 
                 <div className="desktop-nav">
                     {navLinks.map((link) => (

@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import './Projects.css';
 
@@ -28,6 +28,8 @@ const projectsData = [
 ];
 
 const Projects = () => {
+    const [filter, setFilter] = useState('All');
+
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -36,21 +38,38 @@ const Projects = () => {
         e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
     };
 
+    const filters = ['All', 'React', 'Python', 'Node.js'];
+    const filteredProjects = filter === 'All' ? projectsData : projectsData.filter(p => p.tags.includes(filter));
+
     return (
         <section id="projects" className="projects-section">
             <div className="container">
                 <h2 className="section-title">Featured <span className="gradient-text">Work</span></h2>
 
-                <div className="projects-grid">
-                    {projectsData.map((project, index) => (
-                        <motion.div 
-                            className="project-card glass-panel" 
-                            key={index}
-                            onMouseMove={handleMouseMove}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.6, delay: index * 0.2 }}
+                <div className="project-filters">
+                    {filters.map(f => (
+                        <button 
+                            key={f} 
+                            className={`filter-btn ${filter === f ? 'active' : ''}`}
+                            onClick={() => setFilter(f)}
+                        >
+                            {f}
+                        </button>
+                    ))}
+                </div>
+
+                <motion.div layout className="projects-grid">
+                    <AnimatePresence mode="popLayout">
+                        {filteredProjects.map((project, index) => (
+                            <motion.div 
+                                className="project-card glass-panel" 
+                                key={project.title}
+                                layout
+                                onMouseMove={handleMouseMove}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.4 }}
                             whileHover={{ y: -10, scale: 1.02, boxShadow: "0 12px 40px rgba(0,240,255,0.2)" }}
                         >
                             <div className="project-content">
@@ -70,8 +89,9 @@ const Projects = () => {
                             </div>
                             <div className="card-glow"></div>
                         </motion.div>
-                    ))}
-                </div>
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
             </div>
         </section>
     );

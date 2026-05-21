@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -12,6 +13,34 @@ import RevealOnScroll from './components/RevealOnScroll';
 import TechMarquee from './components/TechMarquee';
 import Education from './components/Education';
 import BackToTop from './components/BackToTop';
+import GithubStats from './components/GithubStats';
+import NotFound from './components/NotFound';
+
+const Home = () => (
+  <>
+    <Hero />
+    <TechMarquee />
+    <RevealOnScroll>
+      <Skills />
+    </RevealOnScroll>
+    <RevealOnScroll>
+      <GithubStats />
+    </RevealOnScroll>
+    <RevealOnScroll>
+      <Achievements />
+    </RevealOnScroll>
+    <RevealOnScroll>
+      <Education />
+    </RevealOnScroll>
+    <RevealOnScroll>
+      <Projects />
+    </RevealOnScroll>
+    <RevealOnScroll>
+      <Contact />
+    </RevealOnScroll>
+    <Footer />
+  </>
+);
 
 function App() {
   return (
@@ -27,24 +56,10 @@ function App() {
 
       <Navbar />
       <main>
-        <Hero />
-        <TechMarquee />
-        <RevealOnScroll>
-          <Skills />
-        </RevealOnScroll>
-        <RevealOnScroll>
-          <Achievements />
-        </RevealOnScroll>
-        <RevealOnScroll>
-          <Education />
-        </RevealOnScroll>
-        <RevealOnScroll>
-          <Projects />
-        </RevealOnScroll>
-        <RevealOnScroll>
-          <Contact />
-        </RevealOnScroll>
-        <Footer />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
       <BackToTop />
     </motion.div>
