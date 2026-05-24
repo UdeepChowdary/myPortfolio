@@ -26,7 +26,7 @@ const Navbar = () => {
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
             <div className="nav-content">
                 <div className="logo-container">
-                    <a href="#" className="logo">
+                    <a href="#" className="logo" aria-label="Udeep Chowdary Home Page Logo">
                         U<span className="dot">.</span>
                     </a>
                     <div className="status-indicator">

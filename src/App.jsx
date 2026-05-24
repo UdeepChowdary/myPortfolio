@@ -30,7 +30,11 @@ function App() {
         </Routes>
       </main>
       <Suspense fallback={null}>
-        <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+        <Terminal 
+          isOpen={isTerminalOpen} 
+          onClose={() => setIsTerminalOpen(false)} 
+          onOpen={() => setIsTerminalOpen(true)} 
+        />
       </Suspense>
       <BackToTop />
     </motion.div>

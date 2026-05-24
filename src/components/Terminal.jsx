@@ -4,13 +4,14 @@ import { Terminal as TerminalIcon, X } from 'lucide-react';
 import { COMMANDS } from '../data/terminalCommands';
 import './Terminal.css';
 
-const Terminal = ({ isOpen, onClose }) => {
+const Terminal = ({ isOpen, onClose, onOpen }) => {
     const [history, setHistory] = useState([
         { type: 'output', text: 'Welcome to UdeepOS v1.0.0.' },
         { type: 'output', text: 'Type "help" for a list of available commands.' }
     ]);
     const [input, setInput] = useState('');
     const endRef = useRef(null);
+    const inputRef = useRef(null);
 
     // Auto scroll to bottom
     useEffect(() => {
@@ -23,13 +24,24 @@ const Terminal = ({ isOpen, onClose }) => {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.ctrlKey && e.key === '`') {
+                e.preventDefault();
                 if (isOpen) onClose();
-                else onClose(); // Let App handle opening, or we could pass onOpen
+                else onOpen();
             }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen, onClose]);
+    }, [isOpen, onClose, onOpen]);
+
+    // Handle autofocus when opened
+    useEffect(() => {
+        if (isOpen) {
+            const timer = setTimeout(() => {
+                inputRef.current?.focus();
+            }, 50);
+            return () => clearTimeout(timer);
+        }
+    }, [isOpen]);
 
     const handleCommand = (e) => {
         if (e.key === 'Enter') {
@@ -84,7 +96,7 @@ const Terminal = ({ isOpen, onClose }) => {
                             </div>
                         </div>
                         
-                        <div className="terminal-body" onClick={() => document.getElementById('term-input').focus()}>
+                        <div className="terminal-body" onClick={() => inputRef.current?.focus()}>
                             {history.map((line, i) => (
                                 <div key={i} className={`term-line ${line.type}`}>
                                     {line.text.split('\n').map((str, idx) => (
@@ -96,12 +108,12 @@ const Terminal = ({ isOpen, onClose }) => {
                             <div className="term-input-line">
                                 <span className="term-prompt">visitor@udeep-portfolio:~$</span>
                                 <input 
+                                    ref={inputRef}
                                     id="term-input"
                                     type="text" 
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     onKeyDown={handleCommand}
-                                    autoFocus
                                     autoComplete="off"
                                     spellCheck="false"
                                 />

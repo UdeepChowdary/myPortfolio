@@ -23,19 +23,37 @@ const GithubStats = () => {
 
     useEffect(() => {
         fetch('https://api.github.com/users/UdeepChowdary')
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`GitHub API returned status ${res.status}`);
+                }
+                return res.json();
+            })
             .then(data => {
                 if(data && !data.message) {
                     setStats({
-                        repos: data.public_repos || 0,
-                        followers: data.followers || 0,
-                        following: data.following || 0,
+                        repos: data.public_repos || 18,
+                        followers: data.followers || 8,
+                        following: data.following || 10,
+                    });
+                } else {
+                    // Fallback to static values if rate limited
+                    setStats({
+                        repos: 18,
+                        followers: 8,
+                        following: 10,
                     });
                 }
                 setLoading(false);
             })
             .catch((err) => {
                 console.error('Failed to fetch GitHub stats:', err);
+                // Fallback to static values on network error
+                setStats({
+                    repos: 18,
+                    followers: 8,
+                    following: 10,
+                });
                 setLoading(false);
             });
     }, []);

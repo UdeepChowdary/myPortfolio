@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Contact.css';
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgvjknq';
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_URL || 'https://formspree.io/f/mlgvjknq';
 
 const Contact = () => {
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
@@ -14,10 +14,23 @@ const Contact = () => {
     setErrorMsg('');
 
     const form = e.target;
+    const nameInput = form.elements.name;
+    const emailInput = form.elements.email;
+    const messageInput = form.elements.message;
+    const gotchaInput = form.elements._gotcha;
+    
+    // Honeypot anti-spam check
+    if (gotchaInput && gotchaInput.value) {
+      console.warn('Bot submission detected and blocked.');
+      setStatus('success');
+      form.reset();
+      return;
+    }
+
     const data = {
-      name: form.name.value,
-      email: form.email.value,
-      message: form.message.value,
+      name: nameInput ? nameInput.value : '',
+      email: emailInput ? emailInput.value : '',
+      message: messageInput ? messageInput.value : '',
     };
 
     try {
@@ -88,6 +101,12 @@ const Contact = () => {
                 initial={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
+                {/* Honeypot field - visually hidden to humans, skipped in tab navigation, filled by bots */}
+                <div className="sr-only" aria-hidden="true">
+                  <label htmlFor="contact-gotcha">Do not fill this out if you are human</label>
+                  <input id="contact-gotcha" type="text" name="_gotcha" tabIndex="-1" autoComplete="off" />
+                </div>
+
                 <div className="form-group">
                   <label htmlFor="contact-name" className="sr-only">Your Name</label>
                   <input id="contact-name" type="text" name="name" placeholder="Name" required disabled={status === 'loading'} />

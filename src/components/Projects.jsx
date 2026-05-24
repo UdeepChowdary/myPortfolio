@@ -47,14 +47,14 @@ const Projects = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.8 }}
                                 transition={{ duration: 0.4 }}
-                            whileHover={{ y: -10, scale: 1.02, boxShadow: "0 12px 40px rgba(0,240,255,0.2)" }}
+                            whileHover={{ y: -10, scale: 1.02, boxShadow: "0 16px 48px rgba(99, 102, 241, 0.25)" }}
                         >
                             <div className="project-content">
                                 <div className="project-header">
                                     <h3>{project.title}</h3>
                                     <div className="project-links">
-                                        <a href={project.github} target="_blank" rel="noopener noreferrer"><Github size={20} /></a>
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer"><ExternalLink size={20} /></a>
+                                        <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} source code on GitHub`}><Github size={20} /></a>
+                                        <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title} live demo website`}><ExternalLink size={20} /></a>
                                     </div>
                                 </div>
                                 <p>{project.description}</p>

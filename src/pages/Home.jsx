@@ -4,12 +4,12 @@ import TechMarquee from '../components/TechMarquee';
 import RevealOnScroll from '../components/RevealOnScroll';
 import Skills from '../components/Skills';
 import Footer from '../components/Footer';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 // Below-the-fold components imported lazily
 const GithubStats = React.lazy(() => import('../components/GithubStats'));
-const Achievements = React.lazy(() => import('../components/Achievements'));
+const JourneyTimeline = React.lazy(() => import('../components/JourneyTimeline'));
 const Certifications = React.lazy(() => import('../components/Certifications'));
-const Education = React.lazy(() => import('../components/Education'));
 const Projects = React.lazy(() => import('../components/Projects'));
 const Contact = React.lazy(() => import('../components/Contact'));
 
@@ -28,41 +28,45 @@ const Home = ({ onTerminalClick }) => (
       <Skills />
     </RevealOnScroll>
     
-    <Suspense fallback={<LazyPlaceholder />}>
-      <RevealOnScroll>
-        <GithubStats />
-      </RevealOnScroll>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<LazyPlaceholder />}>
+        <RevealOnScroll>
+          <GithubStats />
+        </RevealOnScroll>
+      </Suspense>
+    </ErrorBoundary>
 
-    <Suspense fallback={<LazyPlaceholder />}>
-      <RevealOnScroll>
-        <Achievements />
-      </RevealOnScroll>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<LazyPlaceholder />}>
+        <RevealOnScroll>
+          <JourneyTimeline />
+        </RevealOnScroll>
+      </Suspense>
+    </ErrorBoundary>
 
-    <Suspense fallback={<LazyPlaceholder />}>
-      <RevealOnScroll>
-        <Certifications />
-      </RevealOnScroll>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<LazyPlaceholder />}>
+        <RevealOnScroll>
+          <Certifications />
+        </RevealOnScroll>
+      </Suspense>
+    </ErrorBoundary>
 
-    <Suspense fallback={<LazyPlaceholder />}>
-      <RevealOnScroll>
-        <Education />
-      </RevealOnScroll>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<LazyPlaceholder />}>
+        <RevealOnScroll>
+          <Projects />
+        </RevealOnScroll>
+      </Suspense>
+    </ErrorBoundary>
 
-    <Suspense fallback={<LazyPlaceholder />}>
-      <RevealOnScroll>
-        <Projects />
-      </RevealOnScroll>
-    </Suspense>
-
-    <Suspense fallback={<LazyPlaceholder />}>
-      <RevealOnScroll>
-        <Contact />
-      </RevealOnScroll>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<LazyPlaceholder />}>
+        <RevealOnScroll>
+          <Contact />
+        </RevealOnScroll>
+      </Suspense>
+    </ErrorBoundary>
     
     <Footer onTerminalClick={onTerminalClick} />
   </>

@@ -33,10 +33,11 @@ const BackToTop = () => {
                 <motion.button
                     className="back-to-top"
                     onClick={scrollToTop}
+                    aria-label="Scroll back to top"
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.5 }}
-                    whileHover={{ y: -5, boxShadow: '0 0 20px rgba(0, 240, 255, 0.4)' }}
+                    whileHover={{ y: -5, boxShadow: '0 0 20px rgba(99, 102, 241, 0.45)' }}
                     whileTap={{ scale: 0.9 }}
                 >
                     <ArrowUp size={24} />
