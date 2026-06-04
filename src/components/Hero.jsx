@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, Github, Linkedin, Mail, Download } from 'lucide-react';
@@ -43,23 +42,11 @@ const Hero = () => {
         cardY.set(0);
     };
 
-=======
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Github, Linkedin, Mail, Download } from 'lucide-react';
-import './Hero.css';
-
-const Hero = () => {
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     return (
         <section id="about" className="hero-section">
             <div className="container hero-content">
                 <motion.div 
-<<<<<<< HEAD
                     initial={{ opacity: 0, y: 25 }}
-=======
-                    initial={{ opacity: 0, y: 20 }}
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="hero-text"
@@ -71,7 +58,6 @@ const Hero = () => {
                     <h1>
                         Hi, I'm Udeep <br />
                         Chowdary Naripeddi <br />
-<<<<<<< HEAD
                         <span className="rotating-text-container" style={{ 
                             display: 'inline-block', 
                             position: 'relative', 
@@ -96,17 +82,11 @@ const Hero = () => {
                         </span>
                     </h1>
                     <p className="hero-description">
-=======
-                        <span className="gradient-text type-writer">AI Engineer</span>
-                    </h1>
-                    <p className="hero-description" style={{ opacity: 1, animation: 'none' }}>
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                         Computer Science student proficient in MERN stack and Python.
                         Passionate about combining Full Stack development with emerging AI technologies
                         like Vector Databases and Prompt Engineering.
                     </p>
 
-<<<<<<< HEAD
                     <div className="hero-actions">
                         <Magnetic>
                             <a href="#projects" className="btn btn-primary">
@@ -138,29 +118,6 @@ const Hero = () => {
                                     <Mail size={20} />
                                 </a>
                             </Magnetic>
-=======
-                    <div className="hero-actions" style={{ opacity: 1, animation: 'none' }}>
-                        <a href="#projects" className="btn btn-primary">
-                            View Work <ArrowRight size={18} className="btn-icon" />
-                        </a>
-                        <a
-                            href="/Udeep_Chowdary_Resume.pdf"
-                            download="Udeep_Chowdary_Resume.pdf"
-                            className="btn btn-outline"
-                        >
-                            Resume <Download size={16} className="btn-icon" />
-                        </a>
-                        <div className="social-links">
-                            <a href="https://github.com/UdeepChowdary" target="_blank" rel="noopener noreferrer" className="social-icon">
-                                <Github size={20} />
-                            </a>
-                            <a href="https://www.linkedin.com/in/udeep-chowdary-naripeddi" target="_blank" rel="noopener noreferrer" className="social-icon">
-                                <Linkedin size={20} />
-                            </a>
-                            <a href="mailto:udeepchowdary06@gmail.com" className="social-icon">
-                                <Mail size={20} />
-                            </a>
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                         </div>
                     </div>
                 </motion.div>
@@ -173,7 +130,6 @@ const Hero = () => {
                 >
                     <div className="glow-orb orb-1"></div>
                     <div className="glow-orb orb-2"></div>
-<<<<<<< HEAD
                     <motion.div 
                         className="code-card glass-panel"
                         onMouseMove={handleCardMouseMove}
@@ -186,30 +142,18 @@ const Hero = () => {
                         whileHover={{ scale: 1.05 }}
                     >
                         <div className="card-header" style={{ transform: "translateZ(25px)" }}>
-=======
-                    <div className="code-card glass-panel">
-                        <div className="card-header">
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                             <div className="circle red"></div>
                             <div className="circle yellow"></div>
                             <div className="circle green"></div>
                         </div>
-<<<<<<< HEAD
                         <div className="code-content" style={{ transform: "translateZ(35px)" }}>
-=======
-                        <div className="code-content">
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                             <div className="line"><span className="keyword">const</span> <span className="variable">developer</span> = <span className="brace">{'{'}</span></div>
                             <div className="line indent-1"><span className="property">name</span>: <span className="string">'Udeep'</span>,</div>
                             <div className="line indent-1"><span className="property">skills</span>: [<span className="string">'React'</span>, <span className="string">'Node.js'</span>, <span className="string">'AI'</span>],</div>
                             <div className="line indent-1"><span className="property">hardWorker</span>: <span className="boolean">true</span></div>
                             <div className="line"><span className="brace">{'}'}</span>;</div>
                         </div>
-<<<<<<< HEAD
                     </motion.div>
-=======
-                    </div>
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                 </motion.div>
             </div>
         </section>

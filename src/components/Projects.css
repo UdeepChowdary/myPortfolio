@@ -53,11 +53,6 @@
 }
 
 .project-card:hover {
-<<<<<<< HEAD
-=======
-    transform: translateY(-8px);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 20px rgba(99, 102, 241, 0.15);
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     border-color: var(--accent-primary);
 }
 
@@ -165,4 +160,4 @@
         font-size: 0.75rem;
         padding: 0.3rem 0.6rem;
     }
-}
+}

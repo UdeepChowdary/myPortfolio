@@ -4,11 +4,7 @@ import { Github, BookOpen } from 'lucide-react';
 import './GithubStats.css';
 
 const SkeletonCard = () => (
-<<<<<<< HEAD
     <div className="skeleton-card glass-panel">
-=======
-    <div className="native-stat-card glass-panel">
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
         <div className="skeleton-icon skeleton-shimmer" />
         <div className="stat-info">
             <div className="skeleton-text-h3 skeleton-shimmer" />

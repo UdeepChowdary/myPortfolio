@@ -15,7 +15,6 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-<<<<<<< HEAD
     // Trap focus inside mobile navigation menu when open
     useEffect(() => {
         if (!isMobileMenuOpen) return;
@@ -50,8 +49,6 @@ const Navbar = () => {
         return () => window.removeEventListener('keydown', handleFocusTrap);
     }, [isMobileMenuOpen]);
 
-=======
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     const navLinks = [
         { name: 'About', href: '#about', icon: <User size={18} /> },
         { name: 'Skills', href: '#skills', icon: <Code2 size={18} /> },

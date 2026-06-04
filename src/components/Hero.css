@@ -9,11 +9,7 @@
 
 .hero-content {
     display: grid;
-<<<<<<< HEAD
     grid-template-columns: 1.2fr 0.8fr;
-=======
-    grid-template-columns: 1fr 1fr;
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     align-items: center;
     gap: 4rem;
 }
@@ -58,7 +54,6 @@ h1 {
     margin-bottom: 1.5rem;
 }
 
-<<<<<<< HEAD
 .rotating-text-container {
     font-size: 3.2rem;
 }
@@ -75,8 +70,6 @@ h1 {
     }
 }
 
-=======
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
 /* Typing Effect */
 .type-writer {
     overflow: hidden;

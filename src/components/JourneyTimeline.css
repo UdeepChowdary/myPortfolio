@@ -47,11 +47,7 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-<<<<<<< HEAD
     background: var(--bg-dark);
-=======
-    background: hsl(240, 15%, 8%);
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     border: 2px solid var(--accent-primary);
     left: 50%;
     top: 20px;
@@ -90,11 +86,7 @@
 .journey-item:hover .timeline-node {
     border-color: var(--accent-secondary);
     box-shadow: 0 0 25px rgba(20, 184, 166, 0.6);
-<<<<<<< HEAD
     background: var(--bg-card-hover);
-=======
-    background: hsl(240, 15%, 12%);
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     transform: translate(-50%, -20%) scale(1.1) !important;
 }
 

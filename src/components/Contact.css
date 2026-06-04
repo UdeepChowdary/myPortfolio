@@ -19,6 +19,12 @@
     margin-bottom: 1rem;
 }
 
+/* Light theme overrides for contact heading */
+[data-theme="light"] .contact-content h2 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
 .contact-content p {
     color: var(--text-secondary);
     margin-bottom: 2.5rem;
@@ -30,7 +36,6 @@
     gap: 1.5rem;
 }
 
-<<<<<<< HEAD
 .form-group {
     position: relative;
     width: 100%;
@@ -40,12 +45,6 @@
 .form-group textarea {
     width: 100%;
     padding: 1.25rem 1rem 0.5rem;
-=======
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 1rem;
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
@@ -69,19 +68,15 @@
     cursor: not-allowed;
 }
 
-<<<<<<< HEAD
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: transparent;
 }
 
-=======
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
 .form-group textarea {
     resize: vertical;
 }
 
-<<<<<<< HEAD
 .form-label {
     position: absolute;
     left: 1rem;
@@ -115,8 +110,6 @@
     color: var(--accent-primary);
 }
 
-=======
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
 /* Error message */
 .form-error {
     color: #ff6b6b;
@@ -198,7 +191,6 @@
     .contact-content {
         padding: 2rem;
     }
-<<<<<<< HEAD
 }
 
 /* Light theme overrides for form inputs */
@@ -229,6 +221,4 @@
 
 [data-theme="light"] .btn-secondary:hover {
     background: rgba(0, 0, 0, 0.04);
-=======
->>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
 }
