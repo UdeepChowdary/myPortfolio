@@ -30,10 +30,22 @@
     gap: 1.5rem;
 }
 
+<<<<<<< HEAD
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1.25rem 1rem 0.5rem;
+=======
 .form-group input,
 .form-group textarea {
     width: 100%;
     padding: 1rem;
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
@@ -57,10 +69,54 @@
     cursor: not-allowed;
 }
 
+<<<<<<< HEAD
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: transparent;
+}
+
+=======
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
 .form-group textarea {
     resize: vertical;
 }
 
+<<<<<<< HEAD
+.form-label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.form-group textarea ~ .form-label {
+    top: 1.25rem;
+    transform: none;
+}
+
+.form-group input:focus ~ .form-label,
+.form-group input:not(:placeholder-shown) ~ .form-label,
+.form-group textarea:focus ~ .form-label,
+.form-group textarea:not(:placeholder-shown) ~ .form-label {
+    top: 0.4rem;
+    transform: none;
+    font-size: 0.75rem;
+    color: var(--accent-primary);
+}
+
+[data-theme="light"] .form-group input:focus ~ .form-label,
+[data-theme="light"] .form-group input:not(:placeholder-shown) ~ .form-label,
+[data-theme="light"] .form-group textarea:focus ~ .form-label,
+[data-theme="light"] .form-group textarea:not(:placeholder-shown) ~ .form-label {
+    color: var(--accent-primary);
+}
+
+=======
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
 /* Error message */
 .form-error {
     color: #ff6b6b;
@@ -142,4 +198,37 @@
     .contact-content {
         padding: 2rem;
     }
+<<<<<<< HEAD
+}
+
+/* Light theme overrides for form inputs */
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group textarea:focus {
+    background: rgba(138, 43, 226, 0.04);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.15);
+}
+
+[data-theme="light"] .form-group input::placeholder,
+[data-theme="light"] .form-group textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+[data-theme="light"] .btn-secondary {
+    color: var(--text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.04);
+=======
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
 }

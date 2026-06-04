@@ -20,6 +20,21 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
         }
     }, [history, isOpen]);
 
+<<<<<<< HEAD
+    // Lock body scroll when terminal is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
+=======
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     // Handle keyboard shortcut (Ctrl+`)
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -33,6 +48,45 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isOpen, onClose, onOpen]);
 
+<<<<<<< HEAD
+    // Trap focus inside terminal window when open
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleFocusTrap = (e) => {
+            if (e.key !== 'Tab') return;
+
+            const focusableElements = [
+                document.querySelector('.term-btn.close'),
+                inputRef.current
+            ].filter(Boolean);
+
+            if (focusableElements.length === 0) return;
+
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+                // Shift + Tab (Backward)
+                if (document.activeElement === firstElement) {
+                    lastElement.focus();
+                    e.preventDefault();
+                }
+            } else {
+                // Tab (Forward)
+                if (document.activeElement === lastElement) {
+                    firstElement.focus();
+                    e.preventDefault();
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleFocusTrap);
+        return () => window.removeEventListener('keydown', handleFocusTrap);
+    }, [isOpen]);
+
+=======
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     // Handle autofocus when opened
     useEffect(() => {
         if (isOpen) {
@@ -87,9 +141,15 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
                     >
                         <div className="terminal-header">
                             <div className="terminal-buttons">
+<<<<<<< HEAD
+                                <button className="term-btn close" onClick={onClose} aria-label="Close terminal window"><X size={10} /></button>
+                                <button className="term-btn minimize" tabIndex="-1" aria-hidden="true" disabled></button>
+                                <button className="term-btn maximize" tabIndex="-1" aria-hidden="true" disabled></button>
+=======
                                 <button className="term-btn close" onClick={onClose}><X size={10} /></button>
                                 <button className="term-btn minimize"></button>
                                 <button className="term-btn maximize"></button>
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                             </div>
                             <div className="terminal-title">
                                 <TerminalIcon size={14} /> udeep-portfolio - bash
@@ -116,6 +176,10 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
                                     onKeyDown={handleCommand}
                                     autoComplete="off"
                                     spellCheck="false"
+<<<<<<< HEAD
+                                    aria-label="Terminal command input"
+=======
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                                 />
                             </div>
                             <div ref={endRef} />

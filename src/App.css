@@ -3,6 +3,8 @@
   width: 100%;
   min-height: 100vh;
 }
+<<<<<<< HEAD
+=======
 
 /* Atmospheric Glow Background (Static Base) */
 .bg-glow {
@@ -17,3 +19,4 @@
     radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.05) 0%, transparent 25%);
   pointer-events: none;
 }
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec

@@ -108,6 +108,18 @@ const Contact = () => {
                 </div>
 
                 <div className="form-group">
+<<<<<<< HEAD
+                  <input id="contact-name" type="text" name="name" placeholder="Name" required disabled={status === 'loading'} />
+                  <label htmlFor="contact-name" className="form-label">Name</label>
+                </div>
+                <div className="form-group">
+                  <input id="contact-email" type="email" name="email" placeholder="Email" required disabled={status === 'loading'} />
+                  <label htmlFor="contact-email" className="form-label">Email</label>
+                </div>
+                <div className="form-group">
+                  <textarea id="contact-message" name="message" placeholder="Message" rows="5" required disabled={status === 'loading'} />
+                  <label htmlFor="contact-message" className="form-label">Message</label>
+=======
                   <label htmlFor="contact-name" className="sr-only">Your Name</label>
                   <input id="contact-name" type="text" name="name" placeholder="Name" required disabled={status === 'loading'} />
                 </div>
@@ -118,6 +130,7 @@ const Contact = () => {
                 <div className="form-group">
                   <label htmlFor="contact-message" className="sr-only">Your Message</label>
                   <textarea id="contact-message" name="message" placeholder="Message" rows="5" required disabled={status === 'loading'} />
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
                 </div>
 
                 {status === 'error' && (

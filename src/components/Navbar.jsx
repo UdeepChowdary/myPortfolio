@@ -15,6 +15,43 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+<<<<<<< HEAD
+    // Trap focus inside mobile navigation menu when open
+    useEffect(() => {
+        if (!isMobileMenuOpen) return;
+
+        const handleFocusTrap = (e) => {
+            if (e.key !== 'Tab') return;
+
+            const elements = [
+                document.querySelector('.mobile-toggle'),
+                ...document.querySelectorAll('.mobile-link')
+            ].filter(Boolean);
+
+            if (elements.length === 0) return;
+
+            const firstElement = elements[0];
+            const lastElement = elements[elements.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    lastElement.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    firstElement.focus();
+                    e.preventDefault();
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleFocusTrap);
+        return () => window.removeEventListener('keydown', handleFocusTrap);
+    }, [isMobileMenuOpen]);
+
+=======
+>>>>>>> c322091c069aaf3d0816be0be72238ad6da503ec
     const navLinks = [
         { name: 'About', href: '#about', icon: <User size={18} /> },
         { name: 'Skills', href: '#skills', icon: <Code2 size={18} /> },
