@@ -184,7 +184,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 340px;
+    width: 100%;
+    max-width: 340px;
     font-size: 0.9rem;
     color: #8b92a5;
 }
@@ -215,8 +216,9 @@
 
 .game-board-area {
     position: relative;
-    width: 342px;
-    height: 342px;
+    width: 100%;
+    max-width: 340px;
+    aspect-ratio: 1 / 1;
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -230,6 +232,8 @@
 
 .game-canvas {
     display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .game-over-modal {
@@ -278,12 +282,75 @@
     box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
 }
 
+/* Virtual Controller / Touch D-pad */
+.game-dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0.2rem;
+    width: 100%;
+    max-width: 200px;
+}
+
+/* Hide D-pad on desktop machines with mouse/hover support */
+@media (hover: hover) and (pointer: fine) {
+    .game-dpad {
+        display: none;
+    }
+}
+
+.dpad-row {
+    display: flex;
+    gap: 24px;
+}
+
+.dpad-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    transition: transform 0.1s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+[data-theme="light"] .dpad-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #333;
+}
+
+.dpad-btn:active {
+    transform: scale(0.9);
+    background: linear-gradient(135deg, #a855f7, #00f0ff);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+}
+
 .game-controls-legend {
     font-size: 0.8rem;
     color: #8b92a5;
+    text-align: center;
+    margin-top: 0.2rem;
 }
 
 [data-theme="light"] .game-controls-legend {
     color: #555;
+}
+
+/* Hide keyboard controls guide on mobile/touch screens */
+@media (max-width: 768px) {
+    .game-controls-legend {
+        display: none;
+    }
 }
 

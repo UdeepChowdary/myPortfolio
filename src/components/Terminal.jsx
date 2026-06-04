@@ -87,43 +87,78 @@ const SnakeGame = ({ onExit }) => {
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(parseInt(localStorage.getItem('snakeHighScore') || '0', 10));
     const [gameOver, setGameOver] = useState(false);
+    const [tick, setTick] = useState(0);
     
     const canvasRef = useRef(null);
     const directionRef = useRef('RIGHT');
+    const lastMovedDirectionRef = useRef('RIGHT');
     const snakeRef = useRef([[5, 5], [4, 5], [3, 5]]);
     const foodRef = useRef([10, 10]);
-    const gameIntervalRef = useRef(null);
 
     const restartGame = useCallback(() => {
         snakeRef.current = [[5, 5], [4, 5], [3, 5]];
         directionRef.current = 'RIGHT';
-        foodRef.current = [Math.floor(Math.random() * 19), Math.floor(Math.random() * 19)];
+        lastMovedDirectionRef.current = 'RIGHT';
+        
+        // Spawn food off initial snake body in full 20x20 grid
+        let newFood;
+        while (true) {
+            newFood = [Math.floor(Math.random() * 20), Math.floor(Math.random() * 20)];
+            const onSnake = [[5, 5], [4, 5], [3, 5]].some(seg => seg[0] === newFood[0] && seg[1] === newFood[1]);
+            if (!onSnake) break;
+        }
+        foodRef.current = newFood;
         setScore(0);
         setGameOver(false);
+        setTick(0);
     }, []);
+
+    const handleDirectionChange = useCallback((newDir) => {
+        if (gameOver) {
+            restartGame();
+            return;
+        }
+        const current = lastMovedDirectionRef.current;
+        if (newDir === 'UP' && current !== 'DOWN') directionRef.current = 'UP';
+        if (newDir === 'DOWN' && current !== 'UP') directionRef.current = 'DOWN';
+        if (newDir === 'LEFT' && current !== 'RIGHT') directionRef.current = 'LEFT';
+        if (newDir === 'RIGHT' && current !== 'LEFT') directionRef.current = 'RIGHT';
+    }, [gameOver, restartGame]);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', ' '].includes(e.key)) {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', 'W', 'A', 'S', 'D', ' '].includes(e.key)) {
                 e.preventDefault(); // Stop page scrolling
+            }
+            
+            if (gameOver) {
+                if (e.key !== 'Escape') {
+                    restartGame();
+                    e.preventDefault();
+                }
+                return;
             }
             
             switch (e.key) {
                 case 'ArrowUp':
                 case 'w':
-                    if (directionRef.current !== 'DOWN') directionRef.current = 'UP';
+                case 'W':
+                    handleDirectionChange('UP');
                     break;
                 case 'ArrowDown':
                 case 's':
-                    if (directionRef.current !== 'UP') directionRef.current = 'DOWN';
+                case 'S':
+                    handleDirectionChange('DOWN');
                     break;
                 case 'ArrowLeft':
                 case 'a':
-                    if (directionRef.current !== 'RIGHT') directionRef.current = 'LEFT';
+                case 'A':
+                    handleDirectionChange('LEFT');
                     break;
                 case 'ArrowRight':
                 case 'd':
-                    if (directionRef.current !== 'LEFT') directionRef.current = 'RIGHT';
+                case 'D':
+                    handleDirectionChange('RIGHT');
                     break;
                 case 'Escape':
                     onExit();
@@ -135,59 +170,73 @@ const SnakeGame = ({ onExit }) => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [onExit]);
+    }, [onExit, gameOver, restartGame, handleDirectionChange]);
 
-    // Game physics loop
+    // Self-contained physics function
+    const moveSnake = useCallback(() => {
+        const head = [...snakeRef.current[0]];
+        const dir = directionRef.current;
+
+        if (dir === 'UP') head[1] -= 1;
+        else if (dir === 'DOWN') head[1] += 1;
+        else if (dir === 'LEFT') head[0] -= 1;
+        else if (dir === 'RIGHT') head[0] += 1;
+
+        const gridCount = 20;
+        const hitWall = head[0] < 0 || head[0] >= gridCount || head[1] < 0 || head[1] >= gridCount;
+        const hitSelf = snakeRef.current.some(segment => segment[0] === head[0] && segment[1] === head[1]);
+
+        if (hitWall || hitSelf) {
+            setGameOver(true);
+            return;
+        }
+
+        const newSnake = [head, ...snakeRef.current];
+
+        // Eat food detection
+        if (head[0] === foodRef.current[0] && head[1] === foodRef.current[1]) {
+            setScore(prevScore => {
+                const newScore = prevScore + 10;
+                setHighScore(prevHigh => {
+                    if (newScore > prevHigh) {
+                        localStorage.setItem('snakeHighScore', String(newScore));
+                        return newScore;
+                    }
+                    return prevHigh;
+                });
+                return newScore;
+            });
+            
+            // Spawn food in empty space on full 20x20 grid
+            let newFood;
+            while (true) {
+                newFood = [Math.floor(Math.random() * 20), Math.floor(Math.random() * 20)];
+                const onSnake = snakeRef.current.some(seg => seg[0] === newFood[0] && seg[1] === newFood[1]);
+                if (!onSnake) break;
+            }
+            foodRef.current = newFood;
+        } else {
+            newSnake.pop();
+        }
+
+        snakeRef.current = newSnake;
+        lastMovedDirectionRef.current = dir;
+        setTick(t => t + 1);
+    }, []);
+
+    // Game loop using setTimeout for dynamic speed difficulty scaling
     useEffect(() => {
         if (gameOver) return;
 
-        const moveSnake = () => {
-            const head = [...snakeRef.current[0]];
-            const dir = directionRef.current;
+        // Base delay is 130ms, gets 5ms faster every 20 score points, capped at 60ms
+        const delay = Math.max(60, 130 - Math.floor(score / 20) * 5);
 
-            if (dir === 'UP') head[1] -= 1;
-            else if (dir === 'DOWN') head[1] += 1;
-            else if (dir === 'LEFT') head[0] -= 1;
-            else if (dir === 'RIGHT') head[0] += 1;
+        const timer = setTimeout(() => {
+            moveSnake();
+        }, delay);
 
-            const gridCount = 20;
-            const hitWall = head[0] < 0 || head[0] >= gridCount || head[1] < 0 || head[1] >= gridCount;
-            const hitSelf = snakeRef.current.some(segment => segment[0] === head[0] && segment[1] === head[1]);
-
-            if (hitWall || hitSelf) {
-                setGameOver(true);
-                return;
-            }
-
-            const newSnake = [head, ...snakeRef.current];
-
-            // Eat food detection
-            if (head[0] === foodRef.current[0] && head[1] === foodRef.current[1]) {
-                const newScore = score + 10;
-                setScore(newScore);
-                if (newScore > highScore) {
-                    setHighScore(newScore);
-                    localStorage.setItem('snakeHighScore', String(newScore));
-                }
-                
-                // Spawn food in empty space
-                let newFood;
-                while (true) {
-                    newFood = [Math.floor(Math.random() * 19), Math.floor(Math.random() * 19)];
-                    const onSnake = snakeRef.current.some(seg => seg[0] === newFood[0] && seg[1] === newFood[1]);
-                    if (!onSnake) break;
-                }
-                foodRef.current = newFood;
-            } else {
-                newSnake.pop();
-            }
-
-            snakeRef.current = newSnake;
-        };
-
-        gameIntervalRef.current = setInterval(moveSnake, 110);
-        return () => clearInterval(gameIntervalRef.current);
-    }, [gameOver, score, highScore]);
+        return () => clearTimeout(timer);
+    }, [gameOver, score, tick, moveSnake]);
 
     // Canvas drawing loop
     useEffect(() => {
@@ -217,33 +266,80 @@ const SnakeGame = ({ onExit }) => {
                 ctx.stroke();
             }
 
-            // Food (Neon Red Sphere)
-            ctx.shadowBlur = 8;
+            // Food (Neon Red Sphere with pulsing glow effect)
+            const pulse = 2 + Math.sin(tick * 0.5) * 1.5;
+            ctx.shadowBlur = 8 + pulse;
             ctx.shadowColor = '#f43f5e';
             ctx.fillStyle = '#f43f5e';
             ctx.beginPath();
             const foodX = foodRef.current[0] * cellSize + cellSize / 2;
             const foodY = foodRef.current[1] * cellSize + cellSize / 2;
-            ctx.arc(foodX, foodY, cellSize / 2 - 2, 0, 2 * Math.PI);
+            ctx.arc(foodX, foodY, cellSize / 2 - pulse, 0, 2 * Math.PI);
             ctx.fill();
 
-            // Snake Body (Neon Purple/Teal shades)
-            ctx.shadowColor = '#00ffcc';
-            ctx.shadowBlur = 6;
+            // Snake Body (Neon Purple/Teal gradient shades)
+            const dir = lastMovedDirectionRef.current;
             snakeRef.current.forEach((segment, index) => {
-                ctx.fillStyle = index === 0 ? '#00ffcc' : '#a855f7';
-                ctx.fillRect(
-                    segment[0] * cellSize + 1,
-                    segment[1] * cellSize + 1,
-                    cellSize - 2,
-                    cellSize - 2
-                );
+                ctx.shadowBlur = index === 0 ? 8 : 4;
+                ctx.shadowColor = index === 0 ? '#00ffcc' : '#a855f7';
+                
+                if (index === 0) {
+                    // Snake Head (Neon Teal with rounded corners)
+                    const headX = segment[0] * cellSize;
+                    const headY = segment[1] * cellSize;
+                    ctx.fillStyle = '#00ffcc';
+                    
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(headX + 1, headY + 1, cellSize - 2, cellSize - 2, 4);
+                        ctx.fill();
+                    } else {
+                        ctx.fillRect(headX + 1, headY + 1, cellSize - 2, cellSize - 2);
+                    }
+
+                    // Draw eyes facing the direction of travel
+                    ctx.fillStyle = '#000000';
+                    ctx.shadowBlur = 0; // reset shadow for eye details
+                    const eyeSize = 2.5;
+                    const offset = 4;
+                    if (dir === 'UP') {
+                        ctx.fillRect(headX + offset, headY + offset, eyeSize, eyeSize);
+                        ctx.fillRect(headX + cellSize - offset - eyeSize, headY + offset, eyeSize, eyeSize);
+                    } else if (dir === 'DOWN') {
+                        ctx.fillRect(headX + offset, headY + cellSize - offset - eyeSize, eyeSize, eyeSize);
+                        ctx.fillRect(headX + cellSize - offset - eyeSize, headY + cellSize - offset - eyeSize, eyeSize, eyeSize);
+                    } else if (dir === 'LEFT') {
+                        ctx.fillRect(headX + offset, headY + offset, eyeSize, eyeSize);
+                        ctx.fillRect(headX + offset, headY + cellSize - offset - eyeSize, eyeSize, eyeSize);
+                    } else if (dir === 'RIGHT') {
+                        ctx.fillRect(headX + cellSize - offset - eyeSize, headY + offset, eyeSize, eyeSize);
+                        ctx.fillRect(headX + cellSize - offset - eyeSize, headY + cellSize - offset - eyeSize, eyeSize, eyeSize);
+                    }
+                } else {
+                    // Snake Body segments with color gradient interpolation
+                    const ratio = index / snakeRef.current.length;
+                    const r = Math.floor(0 + (168 - 0) * ratio);
+                    const g = Math.floor(255 + (85 - 255) * ratio);
+                    const b = Math.floor(204 + (247 - 204) * ratio);
+                    ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+                    
+                    const segX = segment[0] * cellSize;
+                    const segY = segment[1] * cellSize;
+                    
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(segX + 1.5, segY + 1.5, cellSize - 3, cellSize - 3, 2);
+                        ctx.fill();
+                    } else {
+                        ctx.fillRect(segX + 1.5, segY + 1.5, cellSize - 3, cellSize - 3);
+                    }
+                }
             });
             ctx.shadowBlur = 0; // reset
         };
 
         draw();
-    }, [gameOver, score]);
+    }, [gameOver, score, tick]);
 
     return (
         <div className="term-snake-container">
@@ -258,12 +354,20 @@ const SnakeGame = ({ onExit }) => {
                     <div className="game-over-modal">
                         <h3>GAME OVER</h3>
                         <p>Your Score: {score}</p>
-                        <button className="game-play-btn" onClick={restartGame}>Play Again</button>
+                        <button className="game-play-btn" onClick={restartGame}>Press Any Key to Restart</button>
                     </div>
                 )}
             </div>
+            <div className="game-dpad">
+                <button className="dpad-btn up" onClick={() => handleDirectionChange('UP')}>▲</button>
+                <div className="dpad-row">
+                    <button className="dpad-btn left" onClick={() => handleDirectionChange('LEFT')}>◀</button>
+                    <button className="dpad-btn down" onClick={() => handleDirectionChange('DOWN')}>▼</button>
+                    <button className="dpad-btn right" onClick={() => handleDirectionChange('RIGHT')}>▶</button>
+                </div>
+            </div>
             <div className="game-controls-legend">
-                <span>🎮 Move: <b>W, A, S, D</b> or <b>Arrow Keys</b></span>
+                <span>🎮 Keyboard: <b>WASD</b> or <b>Arrow Keys</b></span>
             </div>
         </div>
     );
