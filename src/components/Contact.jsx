@@ -122,6 +122,8 @@ const Contact = () => {
 
                 {status === 'error' && (
                   <motion.p
+                    role="alert"
+                    aria-live="assertive"
                     className="form-error"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
