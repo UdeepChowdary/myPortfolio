@@ -102,3 +102,107 @@
     height: 16px;
     border-radius: 6px;
 }
+
+/* ============================================
+   GITHUB CALENDAR HEATMAP CARD
+   ============================================ */
+.github-calendar-card {
+    margin-top: 2rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.calendar-header-icon {
+    color: var(--accent-secondary);
+}
+
+.calendar-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.calendar-overflow-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(138, 43, 226, 0.3) transparent;
+}
+
+/* Custom Scrollbar styling for the calendar overflow */
+.calendar-overflow-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.calendar-overflow-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.calendar-overflow-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(138, 43, 226, 0.2);
+    border-radius: 10px;
+}
+
+.calendar-overflow-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(138, 43, 226, 0.4);
+}
+
+/* Light theme support */
+[data-theme="light"] .github-calendar-card {
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.calendar-shimmer-loading {
+    width: 100%;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* ============================================
+   PREMIUM GLASSMORPHISM TOOLTIPS OVERRIDES
+   ============================================ */
+.react-activity-calendar__tooltip {
+    background: rgba(15, 15, 25, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(138, 43, 226, 0.25) !important;
+    color: var(--text-primary) !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 12px !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(138, 43, 226, 0.15) !important;
+}
+
+.react-activity-calendar__tooltip-arrow {
+    fill: rgba(15, 15, 25, 0.95) !important;
+}
+
+/* Tooltip for light theme */
+[data-theme="light"] .react-activity-calendar__tooltip {
+    background: rgba(240, 242, 248, 0.95) !important;
+    border: 1px solid rgba(138, 43, 226, 0.15) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 0 20px rgba(138, 43, 226, 0.05) !important;
+}
+
+[data-theme="light"] .react-activity-calendar__tooltip-arrow {
+    fill: rgba(240, 242, 248, 0.95) !important;
+}
+
+
+
