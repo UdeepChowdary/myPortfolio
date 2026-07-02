@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal as TerminalIcon, X } from 'lucide-react';
-import { COMMANDS } from '../data/terminalCommands';
+import { COMMANDS, VIRTUAL_FS } from '../data/terminalCommands';
 import './Terminal.css';
 
 // ============================================
@@ -384,9 +384,52 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
     const [input, setInput] = useState('');
     const [isMatrixActive, setIsMatrixActive] = useState(false);
     const [isSnakeActive, setIsSnakeActive] = useState(false);
+    const [currentDir, setCurrentDir] = useState('/');
+    const [isSimulating, setIsSimulating] = useState(false);
+    const simulationTimersRef = useRef([]);
 
     const endRef = useRef(null);
     const inputRef = useRef(null);
+
+    const cancelSimulations = useCallback(() => {
+        if (simulationTimersRef.current.length > 0) {
+            simulationTimersRef.current.forEach(clearTimeout);
+            simulationTimersRef.current = [];
+        }
+        setIsSimulating(false);
+    }, []);
+
+    // Clean up simulations when closed
+    useEffect(() => {
+        if (!isOpen) {
+            cancelSimulations();
+        }
+    }, [isOpen, cancelSimulations]);
+
+    // Clean up simulations on unmount
+    useEffect(() => {
+        return () => {
+            if (simulationTimersRef.current.length > 0) {
+                simulationTimersRef.current.forEach(clearTimeout);
+            }
+        };
+    }, []);
+
+    // Global listener for Ctrl+C to abort simulations when open
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleGlobalKeyDown = (e) => {
+            if (e.ctrlKey && e.key.toLowerCase() === 'c') {
+                cancelSimulations();
+                setHistory(prev => [...prev, { type: 'input', text: '^C' }]);
+                setInput('');
+            }
+        };
+
+        window.addEventListener('keydown', handleGlobalKeyDown);
+        return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+    }, [isOpen, cancelSimulations]);
 
     // Auto scroll to bottom
     useEffect(() => {
@@ -464,14 +507,81 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
         }
     }, [isOpen, isSnakeActive]);
 
+    const runBuildSimulation = (currentHistory) => {
+        setIsSimulating(true);
+        const steps = [
+            { text: "🚀 vite v7.2.4 building for production...", delay: 200 },
+            { text: "⚡ transforming...", delay: 700 },
+            { text: "✓ 142 modules transformed.", delay: 1200 },
+            { text: "📦 rendering chunks...", delay: 1500 },
+            { text: "dist/index.html                     1.92 kB │ gzip:  0.84 kB", delay: 1900 },
+            { text: "dist/assets/index-D1f9_2v9.css      4.85 kB │ gzip:  1.62 kB", delay: 2100 },
+            { text: "dist/assets/index-G5t4_9b3.js     214.30 kB │ gzip: 68.10 kB", delay: 2400 },
+            { text: "✨ built in 1.42s", delay: 2800 }
+        ];
+
+        steps.forEach((step, idx) => {
+            const timer = setTimeout(() => {
+                setHistory(prev => [...prev, { type: 'raw', text: step.text }]);
+                if (idx === steps.length - 1) {
+                    setIsSimulating(false);
+                }
+            }, step.delay);
+            simulationTimersRef.current.push(timer);
+        });
+    };
+
+    const runDevSimulation = (currentHistory) => {
+        setIsSimulating(true);
+        const steps = [
+            { text: "  VITE v7.2.4  ready in 234 ms", delay: 350 },
+            { text: "  ➜  Local:   http://localhost:5173/", delay: 700 },
+            { text: "  ➜  Network: use --host to expose", delay: 1000 },
+            { text: "  ➜  press h + enter to show help", delay: 1250 },
+            { text: "💡 Dev server active. Press Ctrl+C to terminate the process.", delay: 1550 }
+        ];
+
+        steps.forEach((step, idx) => {
+            const timer = setTimeout(() => {
+                setHistory(prev => [...prev, { type: 'raw', text: step.text }]);
+                if (idx === steps.length - 1) {
+                    setIsSimulating(false);
+                }
+            }, step.delay);
+            simulationTimersRef.current.push(timer);
+        });
+    };
+
     const handleCommand = (e) => {
+        if (isSimulating) return;
+
+        if (e.ctrlKey && e.key.toLowerCase() === 'c') {
+            e.preventDefault();
+            cancelSimulations();
+            const promptPath = currentDir === '/' ? '~' : '~/secrets';
+            setHistory(prev => [...prev, { type: 'input', text: `visitor@udeep-portfolio:${promptPath}$ ${input}^C` }]);
+            setInput('');
+            return;
+        }
+
         if (e.key === 'Enter') {
-            const cmd = input.trim().toLowerCase();
-            let newHistory = [...history, { type: 'input', text: `visitor@udeep-portfolio:~$ ${cmd}` }];
-            
-            if (cmd === '') {
-                // Do nothing
-            } else if (cmd === 'clear') {
+            const rawInput = input.trim();
+            const promptPath = currentDir === '/' ? '~' : '~/secrets';
+            const promptText = `visitor@udeep-portfolio:${promptPath}$ ${rawInput}`;
+
+            if (rawInput === '') {
+                setHistory(prev => [...prev, { type: 'input', text: promptText }]);
+                setInput('');
+                return;
+            }
+
+            const tokens = rawInput.split(/\s+/);
+            const cmd = tokens[0].toLowerCase();
+            const arg = tokens.slice(1).join(' ').trim();
+
+            let newHistory = [...history, { type: 'input', text: promptText }];
+
+            if (cmd === 'clear') {
                 newHistory = [];
             } else if (cmd === 'exit') {
                 onClose();
@@ -491,6 +601,66 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
             } else if (cmd === 'snake') {
                 setIsSnakeActive(true);
                 newHistory.push({ type: 'output', text: 'Launching classic Snake game...' });
+            } else if (cmd === 'ls') {
+                if (currentDir === '/') {
+                    newHistory.push({ 
+                        type: 'raw', 
+                        text: "about_me.txt    contact.txt     projects.txt    secrets/        skills.txt" 
+                    });
+                } else if (currentDir === '/secrets') {
+                    newHistory.push({ 
+                        type: 'raw', 
+                        text: "passcode.txt" 
+                    });
+                }
+            } else if (cmd === 'cd') {
+                if (!arg || arg === '~' || arg === '/') {
+                    setCurrentDir('/');
+                } else if (arg === 'secrets' || arg === './secrets' || arg === '/secrets') {
+                    if (currentDir === '/') {
+                        setCurrentDir('/secrets');
+                    } else {
+                        newHistory.push({ type: 'error', text: 'bash: cd: secrets: No such file or directory' });
+                    }
+                } else if (arg === '..' || arg === '../') {
+                    if (currentDir === '/secrets') {
+                        setCurrentDir('/');
+                    }
+                } else if (arg === 'about_me.txt' || arg === 'contact.txt' || arg === 'projects.txt' || arg === 'skills.txt' || arg === 'passcode.txt') {
+                    newHistory.push({ type: 'error', text: `bash: cd: ${arg}: Not a directory` });
+                } else {
+                    newHistory.push({ type: 'error', text: `bash: cd: ${arg}: No such file or directory` });
+                }
+            } else if (cmd === 'cat') {
+                if (!arg) {
+                    newHistory.push({ type: 'error', text: 'cat: missing filename' });
+                } else if (currentDir === '/') {
+                    if (arg === 'secrets') {
+                        newHistory.push({ type: 'error', text: 'cat: secrets: Is a directory' });
+                    } else if (VIRTUAL_FS[arg]) {
+                        newHistory.push({ type: 'raw', text: VIRTUAL_FS[arg] });
+                    } else {
+                        newHistory.push({ type: 'error', text: `cat: ${arg}: No such file or directory` });
+                    }
+                } else if (currentDir === '/secrets') {
+                    if (VIRTUAL_FS.secrets[arg]) {
+                        newHistory.push({ type: 'raw', text: VIRTUAL_FS.secrets[arg] });
+                    } else if (arg === '..' || arg === '../') {
+                        newHistory.push({ type: 'error', text: 'cat: ..: Is a directory' });
+                    } else {
+                        newHistory.push({ type: 'error', text: `cat: ${arg}: No such file or directory` });
+                    }
+                }
+            } else if (rawInput.toLowerCase() === 'npm run build' || rawInput.toLowerCase() === 'vite build') {
+                setHistory(newHistory);
+                setInput('');
+                runBuildSimulation(newHistory);
+                return;
+            } else if (rawInput.toLowerCase() === 'npm run dev' || rawInput.toLowerCase() === 'vite' || rawInput.toLowerCase() === 'npm start') {
+                setHistory(newHistory);
+                setInput('');
+                runDevSimulation(newHistory);
+                return;
             } else if (COMMANDS[cmd]) {
                 newHistory.push({ type: 'output', text: COMMANDS[cmd] });
             } else {
@@ -548,7 +718,9 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
                                     ))}
                                     
                                     <div className="term-input-line">
-                                        <span className="term-prompt">visitor@udeep-portfolio:~$</span>
+                                        <span className="term-prompt">
+                                            visitor@udeep-portfolio:{currentDir === '/' ? '~' : '~/secrets'}$
+                                        </span>
                                         <input 
                                             ref={inputRef}
                                             id="term-input"
@@ -559,6 +731,7 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
                                             autoComplete="off"
                                             spellCheck="false"
                                             aria-label="Terminal command input"
+                                            disabled={isSimulating}
                                         />
                                     </div>
                                     <div ref={endRef} />

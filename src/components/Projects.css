@@ -45,7 +45,7 @@
 .project-card {
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
     padding: 2rem;
     height: 100%;
     display: flex;
