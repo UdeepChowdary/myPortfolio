@@ -55,18 +55,18 @@ h1 {
 }
 
 .rotating-text-container {
-    font-size: 3.2rem;
+    font-size: 2.5rem;
 }
 
 @media (max-width: 1024px) {
     .rotating-text-container {
-        font-size: 2.8rem;
+        font-size: 2.2rem;
     }
 }
 
 @media (max-width: 768px) {
     .rotating-text-container {
-        font-size: 2.2rem;
+        font-size: 1.8rem;
     }
 }
 
@@ -209,7 +209,7 @@ h1 {
 .code-card {
     padding: 1.5rem;
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transform: rotate(-3deg);
     transition: transform 0.5s ease;

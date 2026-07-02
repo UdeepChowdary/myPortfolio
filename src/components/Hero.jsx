@@ -6,7 +6,7 @@ import './Hero.css';
 
 const Hero = () => {
     // Words to cycle through in typewriter sliding panel
-    const words = ["AI Engineer", "Full Stack Developer", "Open Source Contributor", "MERN Developer"];
+    const words = ["Aspiring AI Engineer", "Aspiring Full Stack Developer", "Open Source Contributor", "Aspiring MERN Developer"];
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
@@ -61,11 +61,13 @@ const Hero = () => {
                         <span className="rotating-text-container" style={{ 
                             display: 'inline-block', 
                             position: 'relative', 
-                            height: '1.2em', 
                             verticalAlign: 'bottom', 
                             overflow: 'hidden', 
-                            width: '100%' 
                         }}>
+                            {/* Invisible placeholder to define the width and height of the container based on the longest word */}
+                            <span style={{ visibility: 'hidden', whiteSpace: 'nowrap' }}>
+                                Aspiring Full Stack Developer
+                            </span>
                             <AnimatePresence mode="wait">
                                 <motion.span
                                     key={index}
@@ -82,7 +84,7 @@ const Hero = () => {
                         </span>
                     </h1>
                     <p className="hero-description">
-                        Computer Science student proficient in MERN stack and Python.
+                        Computer Science student aspiring to be a MERN Stack and AI Engineer.
                         Passionate about combining Full Stack development with emerging AI technologies
                         like Vector Databases and Prompt Engineering.
                     </p>
