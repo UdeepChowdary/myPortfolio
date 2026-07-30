@@ -22,7 +22,7 @@ function App() {
     >
       <SpotlightBackground />
 
-      <Navbar />
+      <Navbar onTerminalClick={() => setIsTerminalOpen(true)} />
       <main>
         <Routes>
           <Route path="/" element={<Home onTerminalClick={() => setIsTerminalOpen(true)} />} />

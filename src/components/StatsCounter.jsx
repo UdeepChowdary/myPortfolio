@@ -30,10 +30,10 @@ const useCountUp = (target, duration = 2000, startCounting) => {
 const stats = [
     {
         icon: <Trophy size={22} />,
-        value: 3,
-        suffix: 'rd',
-        label: 'Place at AIFT',
-        sublabel: 'Summer Challenge 2024',
+        value: 1,
+        suffix: '',
+        label: 'Hackathon Award',
+        sublabel: '3rd Place at AIFT',
     },
     {
         icon: <Rocket size={22} />,
@@ -44,18 +44,18 @@ const stats = [
     },
     {
         icon: <Code2 size={22} />,
-        value: 10,
-        suffix: '+',
-        label: 'Technologies',
-        sublabel: 'React, Node, Python & more',
+        value: 3,
+        suffix: '',
+        label: 'Certifications',
+        sublabel: 'Oracle, DeepLearning.AI',
     },
     {
         icon: <Zap size={22} />,
-        value: 100,
-        suffix: '%',
-        label: 'Passion Driven',
-        sublabel: 'Always building',
-    },
+        value: 500,
+        suffix: '+',
+        label: 'GitHub Commits',
+        sublabel: 'Active Contributor',
+    }
 ];
 
 const StatCard = ({ stat, index, isVisible }) => {
@@ -104,7 +104,7 @@ const StatsCounter = () => {
     }, []);
 
     return (
-        <section className="stats-section" ref={sectionRef}>
+        <section id="stats" className="stats-section" ref={sectionRef}>
             <div className="container">
                 <div className="stats-grid">
                     {stats.map((stat, index) => (

@@ -6,9 +6,9 @@ import './BackToTop.css';
 const BackToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
 
-    // Show button when page is scrolled down 300px
+    // Show button when page is scrolled down 500px
     const toggleVisibility = () => {
-        if (window.scrollY > 300) {
+        if (window.scrollY > 500) {
             setIsVisible(true);
         } else {
             setIsVisible(false);

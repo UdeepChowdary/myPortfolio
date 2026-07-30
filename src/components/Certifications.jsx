@@ -35,9 +35,6 @@ const Certifications = () => {
                                 </div>
                                 <div className="cert-badges">
                                     <span className="cert-date">{cert.date}</span>
-                                    <a href={cert.url} target="_blank" rel="noopener noreferrer" className="cert-verify" title="Verify Credential">
-                                        <CheckCircle size={16} /> Verify
-                                    </a>
                                 </div>
                             </div>
                             

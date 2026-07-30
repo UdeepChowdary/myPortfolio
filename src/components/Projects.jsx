@@ -54,6 +54,13 @@ const ProjectCard = ({ project, handleMouseMove }) => {
                 boxShadow: "0 20px 50px rgba(99, 102, 241, 0.25)" 
             }}
         >
+            <div className="project-image-container" style={{ transform: "translateZ(20px)" }}>
+                {project.image ? (
+                    <img src={project.image} alt={project.title} />
+                ) : (
+                    <span className="project-placeholder">{project.title.charAt(0)}</span>
+                )}
+            </div>
             <div className="project-content" style={{ transform: "translateZ(30px)" }}>
                 <div className="project-header">
                     <h3>{project.title}</h3>

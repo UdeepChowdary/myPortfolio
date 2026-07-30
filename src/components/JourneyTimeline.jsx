@@ -66,6 +66,14 @@ const JourneyTimeline = () => {
                                         
                                         <p className="card-desc">{item.description}</p>
                                         
+                                        {item.skills && (
+                                            <div className="journey-tags">
+                                                {item.skills.map((skill, i) => (
+                                                    <span key={i} className="journey-tag">{skill}</span>
+                                                ))}
+                                            </div>
+                                        )}
+                                        
                                         <ul className="card-highlights">
                                             {item.highlights.map((h, i) => (
                                                 <li key={i}>{h}</li>

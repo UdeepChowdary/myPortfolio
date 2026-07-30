@@ -6,7 +6,7 @@ import './Hero.css';
 
 const Hero = () => {
     // Words to cycle through in typewriter sliding panel
-    const words = ["Aspiring AI Engineer", "Aspiring Full Stack Developer", "Open Source Contributor", "Aspiring MERN Developer"];
+    const words = ["Aspiring AI Engineer", "Building Intelligent Systems", "Deep Learning & RAG", "Advanced Data Structures & Algorithms"];
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const Hero = () => {
                         }}>
                             {/* Invisible placeholder to define the width and height of the container based on the longest word */}
                             <span style={{ visibility: 'hidden', whiteSpace: 'nowrap' }}>
-                                Aspiring Full Stack Developer
+                                Advanced Data Structures & Algorithms
                             </span>
                             <AnimatePresence mode="wait">
                                 <motion.span
@@ -153,7 +153,7 @@ const Hero = () => {
                             <div className="line indent-1"><span className="property">name</span>: <span className="string">'Udeep'</span>,</div>
                             <div className="line indent-1"><span className="property">skills</span>: [<span className="string">'React'</span>, <span className="string">'Node.js'</span>, <span className="string">'AI'</span>],</div>
                             <div className="line indent-1"><span className="property">hardWorker</span>: <span className="boolean">true</span></div>
-                            <div className="line"><span className="brace">{'}'}</span>;</div>
+                            <div className="line"><span className="brace">{'}'}</span>;<span className="typing-cursor"></span></div>
                         </div>
                     </motion.div>
                 </motion.div>

@@ -63,6 +63,37 @@
     margin-bottom: 1rem;
 }
 
+.project-image-container {
+    margin: -2rem -2rem 1.5rem -2rem;
+    height: 180px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(20, 184, 166, 0.15));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+
+.project-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image-container img {
+    transform: scale(1.05);
+}
+
+.project-placeholder {
+    font-size: 5rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.08);
+    user-select: none;
+}
+
 .project-header h3 {
     font-size: 1.5rem;
     font-weight: 600;
@@ -79,6 +110,7 @@
     transition: color 0.2s ease;
     position: relative;
     z-index: 2;
+    cursor: pointer;
 }
 
 .project-links a:hover {

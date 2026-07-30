@@ -12,7 +12,7 @@ const techStack = [
 
 const TechMarquee = () => {
   return (
-    <div className="marquee-container">
+    <div className="marquee-container" aria-label="Technologies I work with" role="marquee">
       <div className="marquee-content">
         {techStack.map((tech, index) => (
           <div key={index} className="marquee-item glass-panel">
