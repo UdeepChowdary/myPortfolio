@@ -22,7 +22,7 @@ describe('JourneyTimeline Component unit tests', () => {
 
     // Check GSSoC 2026 milestone
     expect(screen.getByText(/GirlScript Summer of Code \(GSSoC\) 2026/i)).toBeInTheDocument();
-    expect(screen.getByText(/Selected Open Source Contributor/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Selected Open Source Contributor/i)[0]).toBeInTheDocument();
   });
 
   it('alternates left and right layouts cleanly for items', () => {

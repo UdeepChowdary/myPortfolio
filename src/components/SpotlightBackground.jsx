@@ -32,12 +32,19 @@ const SpotlightBackground = () => {
 
     return (
         <div className="spotlight-wrapper">
+            {/* Ambient Background Aura Orbs */}
+            <div className="ambient-orb ambient-orb-1" />
+            <div className="ambient-orb ambient-orb-2" />
+            <div className="ambient-orb ambient-orb-3" />
+
+            {/* Dynamic Interactive Mouse Spotlight Glow */}
             <div 
                 className="spotlight-effect"
                 style={{
-                    background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, var(--spotlight-color), transparent 40%)`
+                    background: `radial-gradient(650px circle at ${mousePosition.x}px ${mousePosition.y}px, var(--spotlight-color), transparent 45%)`
                 }}
             />
+            {/* Cyber Grid Mask */}
             <div className="spotlight-grid" />
         </div>
     );

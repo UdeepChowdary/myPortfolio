@@ -4,18 +4,76 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -3; /* Sit behind everything */
+    z-index: -3; /* Sit behind content */
     overflow: hidden;
     background-color: var(--bg-dark);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
 }
 
 [data-theme="light"] .spotlight-wrapper {
-    background-color: #f0f2f8; /* Soft light background */
+    background-color: #f4f6fb;
 }
 
-/* The Grid Pattern */
+/* Ambient Floating Aura Orbs */
+.ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.22;
+    pointer-events: none;
+}
+
+.ambient-orb-1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.6), transparent 70%);
+    top: 10%;
+    left: 15%;
+    animation: floatOrb1 18s ease-in-out infinite alternate;
+}
+
+.ambient-orb-2 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.5), transparent 70%);
+    bottom: 15%;
+    right: 10%;
+    animation: floatOrb2 22s ease-in-out infinite alternate;
+}
+
+.ambient-orb-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.4), transparent 70%);
+    top: 55%;
+    left: 45%;
+    animation: floatOrb3 20s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb1 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, 40px) scale(1.1); }
+    100% { transform: translate(-40px, 80px) scale(0.95); }
+}
+
+@keyframes floatOrb2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-70px, -50px) scale(1.08); }
+    100% { transform: translate(50px, -30px) scale(0.92); }
+}
+
+@keyframes floatOrb3 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -60px) scale(1.15); }
+    100% { transform: translate(-50px, 50px) scale(0.85); }
+}
+
+[data-theme="light"] .ambient-orb {
+    opacity: 0.15;
+}
+
+/* Cyber Grid Pattern */
 .spotlight-grid {
     position: absolute;
     top: 0;
@@ -25,34 +83,33 @@
     background-image: 
         linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
         linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-    background-size: 50px 50px;
-    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    background-size: 55px 55px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 95%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 95%);
 }
 
-/* The Spotlight Glow */
+/* Spotlight Glow */
 .spotlight-effect {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; /* Above the wrapper background, below or blended with grid */
-    opacity: 0.15;
-    transition: opacity 0.3s ease;
+    z-index: 1;
+    opacity: 0.25;
+    transition: opacity 0.4s ease;
 }
 
-/* Variables */
 :root {
-    --grid-line: rgba(255, 255, 255, 0.05);
-    --spotlight-color: rgba(0, 240, 255, 0.8);
+    --grid-line: rgba(255, 255, 255, 0.04);
+    --spotlight-color: rgba(0, 240, 255, 0.75);
 }
 
 [data-theme="light"] {
-    --grid-line: rgba(0, 0, 0, 0.05);
-    --spotlight-color: rgba(138, 43, 226, 0.6); /* Purple spotlight in light mode */
+    --grid-line: rgba(0, 0, 0, 0.04);
+    --spotlight-color: rgba(138, 43, 226, 0.5);
 }
 
 [data-theme="light"] .spotlight-effect {
-    opacity: 0.12;
+    opacity: 0.18;
 }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Code2, User, Mail, FolderHeart, Terminal as TerminalIcon } from 'lucide-react';
+import { Menu, X, Code2, User, Mail, FolderHeart } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
-const Navbar = ({ onTerminalClick }) => {
+const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -78,14 +78,6 @@ const Navbar = ({ onTerminalClick }) => {
                 </div>
 
                 <div className="nav-actions">
-                    <button 
-                        className="terminal-toggle-btn"
-                        onClick={onTerminalClick}
-                        title="Open Developer Terminal"
-                        aria-label="Open retro developer terminal"
-                    >
-                        <TerminalIcon size={20} />
-                    </button>
                     <ThemeToggle />
                     <button
                         className="mobile-toggle"

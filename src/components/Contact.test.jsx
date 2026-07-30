@@ -38,7 +38,7 @@ describe('Contact Component unit tests', () => {
 
     // Assert that status is marked success but no fetch request was actually made
     await waitFor(() => {
-      expect(screen.getByText(/Message sent! I'll get back to you soon./i)).toBeInTheDocument();
+      expect(screen.getByText(/Thank you for reaching out/i)).toBeInTheDocument();
     });
     expect(mockFetch).not.toHaveBeenCalled();
   });
@@ -63,7 +63,7 @@ describe('Contact Component unit tests', () => {
     // Verify fetch was dispatched to the endpoint
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledTimes(1);
-      expect(screen.getByText(/Message sent! I'll get back to you soon./i)).toBeInTheDocument();
+      expect(screen.getByText(/Thank you for reaching out/i)).toBeInTheDocument();
     });
   });
 });

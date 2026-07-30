@@ -6,7 +6,7 @@ export const COMMANDS = {
 };
 
 export const VIRTUAL_FS = {
-    "about_me.txt": "Udeep Chowdary\n----------------\nI am a CSE student at SRM University AP focusing on AI & Future Technologies.\nCGPA: 9.16/10\nPassionate about Deep Learning, Full-Stack prototyping, and building responsive, high-fidelity developer interfaces.",
+    "about_me.txt": "Udeep Chowdary\n----------------\nI am a CSE student at SRM University AP focusing on AI & Future Technologies.\nCGPA: 9.15/10\nPassionate about Deep Learning, Full-Stack prototyping, and building responsive, high-fidelity developer interfaces.",
     "projects.txt": "Featured Projects:\n1. Derm-AI (3rd Place - AIFT Summer Challenge)\n   An AI skin disease detector built with Python & TensorFlow.\n2. Emotion Detection Engine\n   AI-powered web app that detects a student's emotional state and delivers personalized learning support using BiLSTM, BERT, and Gemini AI.\n3. algoVizZZ\n   An interactive algorithm visualizer that intuitively demonstrates sorting, searching, and pathfinding algorithms in real-time.",
     "skills.txt": "Technical Skills:\n- Core & Languages: Java (OOP), Python, JavaScript, TypeScript, SQL\n- Full Stack: React, Node.js, Express, MongoDB, Tailwind CSS\n- Data & AI: Deep Learning & RAG, Computer Vision, Prompt Engineering, Vector Databases, REST APIs\n- Tools: Git, GitHub, VS Code, Vite, Postman",
     "contact.txt": "Let's connect!\n- Email: udeepchowdary06@gmail.com\n- GitHub: github.com/UdeepChowdary\n- LinkedIn: linkedin.com/in/udeep-chowdary-naripeddi",

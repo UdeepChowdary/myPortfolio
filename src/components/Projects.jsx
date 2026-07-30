@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, Trophy, X, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 import { projectsData } from '../data/projects';
 import './Projects.css';
 
-const ProjectCard = ({ project, handleMouseMove }) => {
+const ProjectCard = ({ project, handleMouseMove, onSelectProject }) => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
-    // Map mouse position to degree rotations
-    const rotateX = useTransform(y, [-150, 150], [15, -15]);
-    const rotateY = useTransform(x, [-150, 150], [-15, 15]);
+    const rotateX = useTransform(y, [-150, 150], [12, -12]);
+    const rotateY = useTransform(x, [-150, 150], [-12, 12]);
 
     const springConfig = { damping: 25, stiffness: 150 };
     const rotateXSpring = useSpring(rotateX, springConfig);
@@ -24,8 +23,6 @@ const ProjectCard = ({ project, handleMouseMove }) => {
         const mouseY = e.clientY - rect.top - height / 2;
         x.set(mouseX);
         y.set(mouseY);
-
-        // Update the background glow cursor variables
         handleMouseMove(e);
     };
 
@@ -34,42 +31,60 @@ const ProjectCard = ({ project, handleMouseMove }) => {
         y.set(0);
     };
 
+    const isAwarded = project.title === 'Derm-AI';
+
     return (
         <motion.div 
-            className="project-card glass-panel" 
+            className={`project-card glass-panel ${isAwarded ? 'awarded-card' : ''}`}
             layout
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
+            exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.4 }}
             style={{
                 rotateX: rotateXSpring,
                 rotateY: rotateYSpring,
                 transformStyle: "preserve-3d"
             }}
-            whileHover={{ 
-                z: 15,
-                boxShadow: "0 20px 50px rgba(99, 102, 241, 0.25)" 
-            }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            onClick={() => onSelectProject(project)}
         >
-            <div className="project-image-container" style={{ transform: "translateZ(20px)" }}>
+            {/* Award Sheen Badge */}
+            {isAwarded && (
+                <div className="award-ribbon">
+                    <Trophy size={13} /> 3rd Place Winner
+                </div>
+            )}
+
+            <div className="project-image-container">
                 {project.image ? (
                     <img src={project.image} alt={project.title} />
                 ) : (
                     <span className="project-placeholder">{project.title.charAt(0)}</span>
                 )}
+                <div className="image-overlay-hover">
+                    <span className="quick-view-btn">
+                        Quick Preview <ArrowRight size={14} />
+                    </span>
+                </div>
             </div>
-            <div className="project-content" style={{ transform: "translateZ(30px)" }}>
+
+            <div className="project-content">
                 <div className="project-header">
                     <h3>{project.title}</h3>
-                    <div className="project-links">
-                        <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} source code on GitHub`}><Github size={20} /></a>
-                        <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title} live demo website`}><ExternalLink size={20} /></a>
+                    <div className="project-links" onClick={(e) => e.stopPropagation()}>
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" title="View Source Code">
+                            <Github size={18} />
+                        </a>
+                        <a href={project.link} target="_blank" rel="noopener noreferrer" title="Live Preview">
+                            <ExternalLink size={18} />
+                        </a>
                     </div>
                 </div>
-                <p>{project.description}</p>
+                <p className="project-desc">{project.description}</p>
+                
                 <div className="tags">
                     {project.tags.map((tag, i) => (
                         <span key={i} className="tag">{tag}</span>
@@ -83,6 +98,7 @@ const ProjectCard = ({ project, handleMouseMove }) => {
 
 const Projects = () => {
     const [filter, setFilter] = useState('All');
+    const [selectedProject, setSelectedProject] = useState(null);
 
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -92,13 +108,20 @@ const Projects = () => {
         e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
     };
 
-    const filters = ['All', 'React', 'Python', 'Node.js'];
+    const filters = ['All', 'React', 'Python', 'Computer Vision'];
     const filteredProjects = filter === 'All' ? projectsData : projectsData.filter(p => p.tags.includes(filter));
 
     return (
         <section id="projects" className="projects-section">
             <div className="container">
-                <h2 className="section-title">Featured <span className="gradient-text">Work</span></h2>
+                <div className="projects-section-header">
+                    <div className="projects-badge">
+                        <Sparkles size={13} /> PORTFOLIO SHOWCASE
+                    </div>
+                    <h2 className="section-title">
+                        Featured <span className="gradient-text">Work</span>
+                    </h2>
+                </div>
 
                 <div className="project-filters">
                     {filters.map(f => (
@@ -119,10 +142,74 @@ const Projects = () => {
                                 key={project.title}
                                 project={project}
                                 handleMouseMove={handleMouseMove}
+                                onSelectProject={setSelectedProject}
                             />
                         ))}
                     </AnimatePresence>
                 </motion.div>
+
+                {/* Interactive Project Modal */}
+                <AnimatePresence>
+                    {selectedProject && (
+                        <motion.div 
+                            className="project-modal-backdrop"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setSelectedProject(null)}
+                        >
+                            <motion.div 
+                                className="project-modal-card glass-panel"
+                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                                transition={{ type: "spring", damping: 25, stiffness: 250 }}
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <button className="modal-close-btn" onClick={() => setSelectedProject(null)}>
+                                    <X size={20} />
+                                </button>
+
+                                <div className="modal-image-wrapper">
+                                    <img src={selectedProject.image} alt={selectedProject.title} />
+                                    {selectedProject.title === 'Derm-AI' && (
+                                        <div className="modal-award-tag">
+                                            <Trophy size={14} /> 3rd Place - AIFT Summer Challenge
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="modal-body">
+                                    <h3>{selectedProject.title}</h3>
+                                    <p className="modal-desc">{selectedProject.description}</p>
+
+                                    <div className="modal-highlights">
+                                        <h4>Key Features & Architecture:</h4>
+                                        <ul>
+                                            <li><CheckCircle2 size={15} className="check-icon" /> Built with production-ready full stack architecture & clean modular components.</li>
+                                            <li><CheckCircle2 size={15} className="check-icon" /> Optimized for high performance, responsiveness, and real-time execution.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="modal-tags">
+                                        {selectedProject.tags.map((t, idx) => (
+                                            <span key={idx} className="modal-tag-pill">{t}</span>
+                                        ))}
+                                    </div>
+
+                                    <div className="modal-actions">
+                                        <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                                            Launch Live Demo <ExternalLink size={16} />
+                                        </a>
+                                        <a href={selectedProject.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                                            GitHub Repository <Github size={16} />
+                                        </a>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
         </section>
     );

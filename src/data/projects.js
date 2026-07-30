@@ -1,7 +1,7 @@
 export const projectsData = [
     {
         title: 'Derm-AI',
-        description: '3rd Place at AIFT Summer Challenge. An AI-powered skin disease detector using Computer Vision to analyze images and provide health insights.',
+        description: '3rd Place Winner in AIFT Summer Challenge. An AI-powered skin disease detector using Computer Vision to analyze images and provide health insights.',
         image: '/projects/dermAI.png',
         tags: ['Python', 'TensorFlow', 'React', 'Computer Vision'],
         link: 'https://derm-ai-eight-ashen.vercel.app/',

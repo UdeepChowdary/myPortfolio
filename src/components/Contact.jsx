@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Copy, Check, Send, Sparkles } from 'lucide-react';
 import './Contact.css';
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_URL || 'https://formspree.io/f/mlgvjknq';
@@ -7,6 +8,13 @@ const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_URL || 'https://formsp
 const Contact = () => {
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const [errorMsg, setErrorMsg] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('udeepchowdary06@gmail.com');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,19 +68,29 @@ const Contact = () => {
       <div className="container contact-container">
         <motion.div
           className="contact-content glass-panel"
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.7 }}
         >
-          <h2>Get In <span className="gradient-text">Touch</span></h2>
-          <p>
-            Have a project in mind? Reach out at{' '}
-            <a href="mailto:udeepchowdary06@gmail.com" style={{ color: 'var(--accent-secondary)' }}>
-              udeepchowdary06@gmail.com
-            </a>{' '}
-            or use the form below.
-          </p>
+          <div className="contact-section-header">
+            <div className="contact-badge">
+              <Sparkles size={13} /> LET'S CONNECT
+            </div>
+            <h2>Get In <span className="gradient-text">Touch</span></h2>
+            <p className="contact-subtext">
+              Have a project, opportunity, or collaboration in mind? Feel free to reach out anytime!
+            </p>
+            
+            <div className="email-copy-bar glass-panel" onClick={handleCopyEmail}>
+              <Mail size={16} className="email-icon" />
+              <span>udeepchowdary06@gmail.com</span>
+              <button className="copy-btn" title="Copy Email">
+                {copied ? <Check size={14} style={{ color: '#4ade80' }} /> : <Copy size={14} />}
+                {copied && <span className="copied-tooltip">Copied!</span>}
+              </button>
+            </div>
+          </div>
 
           <AnimatePresence mode="wait">
             {status === 'success' ? (
@@ -84,13 +102,14 @@ const Contact = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
-                <span className="feedback-icon">✅</span>
-                <p>Message sent! I'll get back to you soon.</p>
+                <span className="feedback-icon">🎉</span>
+                <h3>Message Received!</h3>
+                <p>Thank you for reaching out. I'll get back to you promptly.</p>
                 <button
-                  className="btn btn-secondary"
+                  className="btn btn-outline"
                   onClick={() => setStatus('idle')}
                 >
-                  Send another
+                  Send Another Message
                 </button>
               </motion.div>
             ) : (
@@ -101,22 +120,24 @@ const Contact = () => {
                 initial={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                {/* Honeypot field - visually hidden to humans, skipped in tab navigation, filled by bots */}
                 <div className="sr-only" aria-hidden="true">
                   <label htmlFor="contact-gotcha">Do not fill this out if you are human</label>
                   <input id="contact-gotcha" type="text" name="_gotcha" tabIndex="-1" autoComplete="off" />
                 </div>
 
-                <div className="form-group">
-                  <input id="contact-name" type="text" name="name" placeholder="Name" required disabled={status === 'loading'} />
-                  <label htmlFor="contact-name" className="form-label">Name</label>
+                <div className="form-row">
+                  <div className="form-group">
+                    <input id="contact-name" type="text" name="name" placeholder="Name" required disabled={status === 'loading'} />
+                    <label htmlFor="contact-name" className="form-label">Name</label>
+                  </div>
+                  <div className="form-group">
+                    <input id="contact-email" type="email" name="email" placeholder="Email" required disabled={status === 'loading'} />
+                    <label htmlFor="contact-email" className="form-label">Email</label>
+                  </div>
                 </div>
+
                 <div className="form-group">
-                  <input id="contact-email" type="email" name="email" placeholder="Email" required disabled={status === 'loading'} />
-                  <label htmlFor="contact-email" className="form-label">Email</label>
-                </div>
-                <div className="form-group">
-                  <textarea id="contact-message" name="message" placeholder="Message" rows="5" required disabled={status === 'loading'} />
+                  <textarea id="contact-message" name="message" placeholder="Message" rows="4" required disabled={status === 'loading'} />
                   <label htmlFor="contact-message" className="form-label">Message</label>
                 </div>
 
@@ -134,13 +155,13 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className={`btn btn-primary ${status === 'loading' ? 'btn-loading' : ''}`}
+                  className={`btn btn-primary submit-btn ${status === 'loading' ? 'btn-loading' : ''}`}
                   disabled={status === 'loading'}
                 >
                   {status === 'loading' ? (
                     <span className="spinner-wrap"><span className="spinner" /> Sending…</span>
                   ) : (
-                    'Send Message'
+                    <>Send Message <Send size={16} /></>
                   )}
                 </button>
               </motion.form>
