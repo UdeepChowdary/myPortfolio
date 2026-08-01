@@ -1,265 +1,184 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight, Github, Linkedin, Mail, Download, Code2, Sparkles, Terminal, Copy, Check } from 'lucide-react';
-import Magnetic from './Magnetic';
+import React from 'react';
+import { motion } from 'framer-motion';
+import {
+    ArrowRight, Github, Linkedin, Mail, Download,
+    Trophy, ExternalLink
+} from 'lucide-react';
 import './Hero.css';
 
-const CODE_TABS = [
-    {
-        id: 'developer.ts',
-        label: 'developer.ts',
-        language: 'typescript',
-        lines: [
-            { text: "const developer = {", indent: 0 },
-            { text: "  name: 'Udeep Chowdary',", indent: 1 },
-            { text: "  role: 'AI & Full Stack Engineer',", indent: 1 },
-            { text: "  cgpa: 9.15,", indent: 1 },
-            { text: "  stack: ['React', 'Node.js', 'Python', 'Gemini AI'],", indent: 1 },
-            { text: "  openToWork: true", indent: 1 },
-            { text: "};", indent: 0 }
-        ]
-    },
-    {
-        id: 'derm_ai.py',
-        label: 'derm_ai.py',
-        language: 'python',
-        lines: [
-            { text: "# AIFT 2025 - 3rd Place National Winner", indent: 0 },
-            { text: "import tensorflow as tf", indent: 0 },
-            { text: "from derm_ai import ComputerVisionModel", indent: 0 },
-            { text: "", indent: 0 },
-            { text: "model = ComputerVisionModel(weights='imagenet')", indent: 0 },
-            { text: "insight = model.diagnose(skin_image)", indent: 0 },
-            { text: "print('Diagnosis:', insight.confidence)", indent: 0 }
-        ]
-    },
-    {
-        id: 'status.sh',
-        label: 'status.sh',
-        language: 'bash',
-        lines: [
-            { text: "$ echo 'System Readiness Check...'", indent: 0 },
-            { text: "✓ React 19 Engine: ACTIVE", indent: 0 },
-            { text: "✓ Vector DB & RAG: READY", indent: 0 },
-            { text: "✓ GSSoC 2026 Contributor: ACTIVE", indent: 0 },
-            { text: "⚡ Status: Available for High Impact Roles", indent: 0 }
-        ]
-    }
+const PROOF_STATS = [
+    { value: '3', label: 'Live Projects' },
+    { value: '9.15', label: 'CGPA / 10' },
+    { value: "GSSoC", label: "Contributor '26" },
 ];
 
+const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] },
+});
+
 const Hero = () => {
-    const words = [
-        "Aspiring AI Engineer",
-        "Building Intelligent Systems",
-        "Full Stack Web Developer",
-        "Deep Learning & RAG Specialist"
-    ];
-    const [index, setIndex] = useState(0);
-    const [activeTab, setActiveTab] = useState(CODE_TABS[0]);
-    const [copied, setCopied] = useState(false);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setIndex((prev) => (prev + 1) % words.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, []);
-
-    // 3D Card Hover Physics
-    const cardX = useMotionValue(0);
-    const cardY = useMotionValue(0);
-
-    const cardRotateX = useTransform(cardY, [-200, 200], [15, -15]);
-    const cardRotateY = useTransform(cardX, [-200, 200], [-15, 15]);
-
-    const springConfig = { damping: 22, stiffness: 140 };
-    const cardRotateXSpring = useSpring(cardRotateX, springConfig);
-    const cardRotateYSpring = useSpring(cardRotateY, springConfig);
-
-    const handleCardMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left - rect.width / 2;
-        const mouseY = e.clientY - rect.top - rect.height / 2;
-        cardX.set(mouseX);
-        cardY.set(mouseY);
-    };
-
-    const handleCardMouseLeave = () => {
-        cardX.set(0);
-        cardY.set(0);
-    };
-
-    const handleCopyCode = () => {
-        const codeText = activeTab.lines.map(l => l.text).join('\n');
-        navigator.clipboard.writeText(codeText);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
-
     return (
         <section id="about" className="hero-section">
             <div className="container hero-content">
-                {/* Left Text Block */}
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+
+                {/* ── Left: The Claim ── */}
+                <motion.div
                     className="hero-text"
+                    {...fadeUp(0.1)}
                 >
-                    <div className="badge glass-panel">
-                        <span className="dot-indicator"></span>
-                        Available for Work
+                    {/* Identity label */}
+                    <div className="hero-label">
+                        <span className="hero-label-name">Udeep Chowdary</span>
+                        <span className="hero-label-dot" aria-hidden="true">·</span>
+                        <span className="hero-label-role">AI Engineer &amp; Builder</span>
                     </div>
 
-                    <h1>
-                        Hi, I'm Udeep <br />
-                        Chowdary Naripeddi <br />
-                        <span className="rotating-text-container">
-                            <span className="placeholder-text">Deep Learning & RAG Specialist</span>
-                            <AnimatePresence mode="wait">
-                                <motion.span
-                                    key={index}
-                                    initial={{ y: 24, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    exit={{ y: -24, opacity: 0 }}
-                                    transition={{ duration: 0.4, ease: "easeOut" }}
-                                    className="gradient-text active-rotating-text"
-                                >
-                                    {words[index]}
-                                </motion.span>
-                            </AnimatePresence>
-                        </span>
+                    {/* Display headline */}
+                    <h1 className="hero-headline">
+                        I build AI&nbsp;products
+                        <br />
+                        <span className="hero-headline-accent">that actually ship.</span>
                     </h1>
 
+                    {/* Award anchor */}
+                    <div className="hero-award" role="note" aria-label="Award: AIFT 2025 3rd Place National Winner">
+                        <Trophy size={13} className="hero-award-icon" aria-hidden="true" />
+                        <span>AIFT 2025 — <strong>3rd Place National Winner</strong></span>
+                    </div>
+
+                    {/* Value-first description */}
                     <p className="hero-description">
-                        Computer Science student at <strong>SRM University AP</strong> (CGPA: 9.15/10).
-                        Specializing in Full Stack MERN development, Deep Learning, and AI-driven applications.
+                        CS student at SRM University AP (CGPA&nbsp;9.15).
+                        I ship production-ready AI applications—from TensorFlow
+                        pipelines to full-stack MERN interfaces.
                     </p>
 
+                    {/* CTAs */}
                     <div className="hero-actions">
-                        <Magnetic>
-                            <a href="#projects" className="btn btn-primary">
-                                View Work <ArrowRight size={18} className="btn-icon" />
-                            </a>
-                        </Magnetic>
-                        <Magnetic>
-                            <a
-                                href="/UdeepChowdaryNaripeddi_resume.pdf"
-                                download="UdeepChowdaryNaripeddi_Resume.pdf"
-                                className="btn btn-outline"
-                            >
-                                Resume <Download size={16} className="btn-icon" />
-                            </a>
-                        </Magnetic>
+                        <a href="#projects" className="btn btn-primary" aria-label="View my projects">
+                            View My Work <ArrowRight size={15} aria-hidden="true" />
+                        </a>
+                        <a
+                            href="/UdeepChowdaryNaripeddi_resume.pdf"
+                            download="UdeepChowdaryNaripeddi_Resume.pdf"
+                            className="btn btn-outline"
+                            aria-label="Download resume"
+                        >
+                            Resume <Download size={14} aria-hidden="true" />
+                        </a>
+                    </div>
 
-                        <div className="social-links">
-                            <Magnetic>
-                                <a href="https://github.com/UdeepChowdary" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="GitHub Profile">
-                                    <Github size={19} />
-                                </a>
-                            </Magnetic>
-                            <Magnetic>
-                                <a href="https://www.linkedin.com/in/udeep-chowdary-naripeddi-99908627b" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn Profile">
-                                    <Linkedin size={19} />
-                                </a>
-                            </Magnetic>
-                            <Magnetic>
-                                <a href="mailto:udeepchowdary06@gmail.com" className="social-icon" aria-label="Send Email">
-                                    <Mail size={19} />
-                                </a>
-                            </Magnetic>
-                        </div>
+                    {/* Social links */}
+                    <div className="hero-social">
+                        <a
+                            href="https://github.com/UdeepChowdary"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hero-social-link"
+                            aria-label="GitHub profile"
+                        >
+                            <Github size={17} aria-hidden="true" />
+                        </a>
+                        <a
+                            href="https://www.linkedin.com/in/udeep-chowdary-naripeddi-99908627b"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hero-social-link"
+                            aria-label="LinkedIn profile"
+                        >
+                            <Linkedin size={17} aria-hidden="true" />
+                        </a>
+                        <a
+                            href="mailto:udeepchowdary06@gmail.com"
+                            className="hero-social-link"
+                            aria-label="Send email"
+                        >
+                            <Mail size={17} aria-hidden="true" />
+                        </a>
                     </div>
                 </motion.div>
 
-                {/* Right Interactive Code Editor + Floating Tech Orbs */}
-                <motion.div 
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="hero-visual"
+                {/* ── Right: The Proof ── */}
+                <motion.div
+                    className="hero-proof"
+                    {...fadeUp(0.25)}
                 >
-                    <div className="glow-orb orb-1"></div>
-                    <div className="glow-orb orb-2"></div>
+                    <article className="proof-card glass-card" aria-label="Featured project: Derm-AI">
 
-                    {/* Floating Tech Badges around Card */}
-                    <motion.div 
-                        className="floating-tech-badge badge-react glass-panel"
-                        animate={{ y: [0, -10, 0] }}
-                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                    >
-                        <Code2 size={15} style={{ color: '#61dafb' }} /> React
-                    </motion.div>
-
-                    <motion.div 
-                        className="floating-tech-badge badge-ai glass-panel"
-                        animate={{ y: [0, 12, 0] }}
-                        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                    >
-                        <Sparkles size={15} style={{ color: '#a855f7' }} /> Gemini AI
-                    </motion.div>
-
-                    <motion.div 
-                        className="floating-tech-badge badge-py glass-panel"
-                        animate={{ y: [0, -8, 0] }}
-                        transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-                    >
-                        <Terminal size={15} style={{ color: '#3776ab' }} /> Python
-                    </motion.div>
-
-                    {/* Interactive Code Window */}
-                    <motion.div 
-                        className="code-card glass-panel"
-                        onMouseMove={handleCardMouseMove}
-                        onMouseLeave={handleCardMouseLeave}
-                        style={{
-                            rotateX: cardRotateXSpring,
-                            rotateY: cardRotateYSpring,
-                            transformStyle: "preserve-3d"
-                        }}
-                    >
-                        <div className="code-card-topbar">
-                            <div className="window-dots">
-                                <span className="circle red"></span>
-                                <span className="circle yellow"></span>
-                                <span className="circle green"></span>
+                        {/* Screenshot */}
+                        <div className="proof-image-wrapper">
+                            <img
+                                src="/projects/dermAI.png"
+                                alt="Derm-AI application interface — AI-powered skin disease detection"
+                                className="proof-image"
+                                loading="eager"
+                            />
+                            <div className="proof-image-overlay" aria-hidden="true">
+                                <a
+                                    href="https://derm-ai-eight-ashen.vercel.app/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="proof-overlay-btn"
+                                    aria-label="Open Derm-AI live demo"
+                                >
+                                    Open Live Demo <ExternalLink size={12} />
+                                </a>
                             </div>
-                            <div className="code-tabs">
-                                {CODE_TABS.map(tab => (
-                                    <button 
-                                        key={tab.id}
-                                        className={`code-tab-btn ${activeTab.id === tab.id ? 'active' : ''}`}
-                                        onClick={() => setActiveTab(tab)}
-                                    >
-                                        {tab.label}
-                                    </button>
+                        </div>
+
+                        {/* Card body */}
+                        <div className="proof-body">
+
+                            {/* Title + award */}
+                            <div className="proof-meta">
+                                <h2 className="proof-title">Derm-AI</h2>
+                                <span className="proof-award-badge">
+                                    <Trophy size={10} aria-hidden="true" />
+                                    3rd Place · AIFT 2025
+                                </span>
+                            </div>
+
+                            <p className="proof-desc">
+                                Computer Vision system for AI-assisted skin disease detection.
+                            </p>
+
+                            {/* Stats row */}
+                            <div className="proof-stats" role="list" aria-label="Key metrics">
+                                {PROOF_STATS.map((stat) => (
+                                    <div key={stat.label} className="proof-stat" role="listitem">
+                                        <span className="proof-stat-value">{stat.value}</span>
+                                        <span className="proof-stat-label">{stat.label}</span>
+                                    </div>
                                 ))}
                             </div>
-                            <button className="copy-code-btn" onClick={handleCopyCode} title="Copy Snippet">
-                                {copied ? <Check size={14} style={{ color: '#27c93f' }} /> : <Copy size={14} />}
-                            </button>
-                        </div>
 
-                        <div className="code-content">
-                            <AnimatePresence mode="wait">
-                                <motion.div 
-                                    key={activeTab.id}
-                                    initial={{ opacity: 0, x: 10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -10 }}
-                                    transition={{ duration: 0.25 }}
+                            {/* Action links */}
+                            <div className="proof-actions">
+                                <a
+                                    href="https://github.com/UdeepChowdary/derm_ai"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="proof-action-btn"
+                                    aria-label="View Derm-AI source code on GitHub"
                                 >
-                                    {activeTab.lines.map((line, idx) => (
-                                        <div key={idx} className="code-line" style={{ paddingLeft: `${line.indent * 1.2}rem` }}>
-                                            <span className="line-num">{idx + 1}</span>
-                                            <span className="line-text">{line.text}</span>
-                                        </div>
-                                    ))}
-                                </motion.div>
-                            </AnimatePresence>
+                                    <Github size={13} aria-hidden="true" /> GitHub
+                                </a>
+                                <a
+                                    href="https://derm-ai-eight-ashen.vercel.app/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="proof-action-btn proof-action-primary"
+                                    aria-label="Open Derm-AI live demo"
+                                >
+                                    <ExternalLink size={13} aria-hidden="true" /> Live Demo
+                                </a>
+                            </div>
                         </div>
-                    </motion.div>
+                    </article>
                 </motion.div>
+
             </div>
         </section>
     );
