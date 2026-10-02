@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Trophy, Award, Sparkles, Calendar, Star, Code2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { GraduationCap, Trophy, Award, Sparkles, Calendar, CheckCircle2 } from 'lucide-react';
 import { journeyData } from '../data/journey';
 import './JourneyTimeline.css';
 
 const getIcon = (iconName) => {
-    const props = { size: 19 };
+    const props = { size: 18 };
     switch (iconName) {
         case 'GraduationCap': return <GraduationCap {...props} />;
         case 'Trophy': return <Trophy {...props} />;
@@ -16,24 +16,31 @@ const getIcon = (iconName) => {
 };
 
 const FILTER_TABS = [
-    { id: 'all', label: 'All Path' },
+    { id: 'all', label: 'All Milestones' },
     { id: 'education', label: 'Education' },
-    { id: 'award', label: 'Hackathons & Awards' },
+    { id: 'award', label: 'Competitions & Hackathons' },
     { id: 'opensource', label: 'Open Source' }
 ];
 
 const getTypeLabel = (type) => {
     switch (type) {
-        case 'education': return 'Education';
+        case 'education': return 'Academic Rigor';
         case 'award': return 'National Hackathon';
-        case 'competition': return 'Class Competition';
-        case 'opensource': return 'Open Source';
+        case 'competition': return 'Competition Winner';
+        case 'opensource': return 'Open Source Contributor';
         default: return type;
     }
 };
 
 const JourneyTimeline = () => {
     const [activeTab, setActiveTab] = useState('all');
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start center", "end center"]
+    });
+
+    const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
     const filteredData = journeyData.filter(item => {
         if (activeTab === 'all') return true;
@@ -45,19 +52,21 @@ const JourneyTimeline = () => {
         <section id="journey" className="journey-section">
             <div className="container">
                 <div className="journey-section-header">
-                    <div className="journey-badge">
-                        <Sparkles size={13} /> CAREER & ACADEMIC PATH
-                    </div>
                     <h2 className="section-title">
-                        My <span className="gradient-text">Journey</span>
+                        My Journey & Milestones
                     </h2>
+                    <p className="journey-section-desc">
+                        A track record of theoretical mastery, competitive wins, and open-source contributions.
+                    </p>
                 </div>
 
                 {/* Filter Pills */}
-                <div className="journey-filter-pills">
+                <div className="journey-filter-pills" role="tablist" aria-label="Journey category filters">
                     {FILTER_TABS.map(tab => (
                         <button 
                             key={tab.id}
+                            role="tab"
+                            aria-selected={activeTab === tab.id}
                             className={`filter-pill ${activeTab === tab.id ? 'active' : ''}`}
                             onClick={() => setActiveTab(tab.id)}
                         >
@@ -66,9 +75,15 @@ const JourneyTimeline = () => {
                     ))}
                 </div>
 
-                <div className="journey-timeline">
+                <div className="journey-timeline" ref={containerRef}>
+                    {/* Base dim line */}
+                    <div className="timeline-line-bg"></div>
+                    
                     {/* Glowing vertical path line */}
-                    <div className="timeline-glow-line"></div>
+                    <motion.div 
+                        className="timeline-glow-line"
+                        style={{ scaleY, transformOrigin: 'top' }}
+                    ></motion.div>
                     
                     <AnimatePresence mode="popLayout">
                         {filteredData.map((item, index) => {
@@ -78,10 +93,10 @@ const JourneyTimeline = () => {
                                     key={item.id} 
                                     className={`journey-item ${isEven ? 'left' : 'right'}`}
                                     layout
-                                    initial={{ opacity: 0, y: 20 }}
+                                    initial={{ opacity: 0, y: 15 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    transition={{ duration: 0.4 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.35 }}
                                 >
                                     {/* Center node */}
                                     <div className="timeline-node">
@@ -95,7 +110,7 @@ const JourneyTimeline = () => {
                                         <div className="journey-card glass-panel">
                                             <div className="card-badge-container">
                                                 <span className="card-year">
-                                                    <Calendar size={13} /> {item.year}
+                                                    <Calendar size={12} /> {item.year}
                                                 </span>
                                                 <span className={`card-type-badge ${item.type}`}>
                                                     {getTypeLabel(item.type)}
@@ -104,27 +119,30 @@ const JourneyTimeline = () => {
                                             
                                             <div className="card-meta">
                                                 <h3 className="card-title">{item.title}</h3>
-                                                <h4 className="card-subtitle gradient-text">{item.subtitle}</h4>
+                                                <h4 className="card-subtitle">{item.subtitle}</h4>
                                                 <span className="card-date-range">{item.dateRange}</span>
                                             </div>
                                             
-                                            <p className="card-desc">{item.description}</p>
+                                            <p className="card-description">{item.description}</p>
                                             
-                                            {item.skills && (
-                                                <div className="journey-tags">
-                                                    {item.skills.map((skill, i) => (
-                                                        <span key={i} className="journey-tag">{skill}</span>
+                                            {item.highlights && item.highlights.length > 0 && (
+                                                <div className="card-highlights">
+                                                    {item.highlights.map((highlight, idx) => (
+                                                        <div key={idx} className="highlight-row">
+                                                            <CheckCircle2 size={13} className="highlight-bullet-icon" />
+                                                            <span>{highlight}</span>
+                                                        </div>
                                                     ))}
                                                 </div>
                                             )}
-                                            
-                                            <ul className="card-highlights">
-                                                {item.highlights.map((h, i) => (
-                                                    <li key={i}>
-                                                        <Star size={13} className="highlight-star" /> {h}
-                                                    </li>
-                                                ))}
-                                            </ul>
+
+                                            {item.skills && (
+                                                <div className="card-tags">
+                                                    {item.skills.map((skill, idx) => (
+                                                        <span key={idx} className="journey-tag">{skill}</span>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </motion.div>

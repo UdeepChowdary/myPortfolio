@@ -1,8 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useLenis } from 'lenis/react';
 import './SpotlightBackground.css';
 
 const SpotlightBackground = () => {
     const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 });
+
+    // Lenis scroll velocity — gives us how fast the user is scrolling
+    // We use this to shift the ambient orbs slightly on scroll (parallax depth)
+    const orbOffsetRef = useRef(0);
+    const [orbOffset, setOrbOffset] = useState(0);
+
+    useLenis(({ velocity }) => {
+        // Accumulate a subtle vertical offset proportional to scroll velocity
+        // Dampen it toward 0 so it bounces back when scroll stops
+        orbOffsetRef.current = velocity * 6;
+        setOrbOffset(orbOffsetRef.current);
+    });
 
     useEffect(() => {
         let requestRef = null;
@@ -32,10 +45,19 @@ const SpotlightBackground = () => {
 
     return (
         <div className="spotlight-wrapper">
-            {/* Ambient Background Aura Orbs */}
-            <div className="ambient-orb ambient-orb-1" />
-            <div className="ambient-orb ambient-orb-2" />
-            <div className="ambient-orb ambient-orb-3" />
+            {/* Ambient Background Aura Orbs — shift on scroll velocity for parallax depth */}
+            <div
+                className="ambient-orb ambient-orb-1"
+                style={{ transform: `translateY(${orbOffset * 0.6}px)` }}
+            />
+            <div
+                className="ambient-orb ambient-orb-2"
+                style={{ transform: `translateY(${orbOffset * 1.0}px)` }}
+            />
+            <div
+                className="ambient-orb ambient-orb-3"
+                style={{ transform: `translateY(${orbOffset * 0.4}px)` }}
+            />
 
             {/* Dynamic Interactive Mouse Spotlight Glow */}
             <div 

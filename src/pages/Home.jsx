@@ -23,7 +23,7 @@ const LazyPlaceholder = () => (
 const Home = ({ onTerminalClick }) => (
   <>
     {/* 1. Hero & Marquee */}
-    <Hero />
+    <Hero onTerminalClick={onTerminalClick} />
     <TechMarquee />
 
     {/* 2. Featured Projects (Recruiter High-Priority) */}

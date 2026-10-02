@@ -140,14 +140,14 @@ const GithubStats = () => {
     }, [generateFallbackData]);
 
     const calendarTheme = {
-        light: ['#ebedf0', '#e9d5ff', '#d8b4fe', '#a855f7', '#7e22ce'], // Purple shades to match light theme
-        dark: ['#161b22', '#2d1b4e', '#4c1d95', '#7c3aed', '#a78bfa'],  // Vibrant purple shades to match dark theme
+        light: ['#ebedf0', '#b9f5fb', '#72e8f4', '#00b8c6', '#02808c'],
+        dark: ['#0f172a', '#043e49', '#056d78', '#00a8b7', '#00f0ff'],
     };
 
     return (
         <section id="github-stats" className="github-stats-section">
             <div className="container">
-                <h2 className="section-title">GitHub <span className="gradient-text">Activity</span></h2>
+                <h2 className="section-title">GitHub Engineering Activity</h2>
                 
                 <div className="native-stats-grid">
                     {loading ? (

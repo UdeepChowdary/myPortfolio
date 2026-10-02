@@ -2,19 +2,23 @@ export const certsData = [
     {
         id: 1,
         title: "Google AI Professional Certificate",
-        issuer: "Coursera & Google",
+        issuer: "Google & Coursera",
+        credentialId: "JPCE3SCS68EB",
         date: "May 2026",
         url: "https://coursera.org/verify/professional-cert/JPCE3SCS68EB",
-        description: "7 courses covering AI Fundamentals, Brainstorming, Research, Writing, Content Creation, Data Analysis, and App Building. Built 20+ AI artifacts and vibe coded a custom AI app.",
-        icon: "🧠"
+        description: "Comprehensive 7-course specialization covering AI Fundamentals, Multimodal Generative Systems, Model Evaluation, Data Science pipelines, and Custom AI Application Building. Built 20+ functional AI artifacts.",
+        skillsCovered: ["Prompt Engineering", "Model Fine-Tuning", "Multimodal Systems", "Responsible AI"],
+        iconName: "Brain"
     },
     {
         id: 2,
         title: "Google AI Essentials",
-        issuer: "Coursera & Google",
+        issuer: "Google & Coursera",
+        credentialId: "TO57ECI7XTAD",
         date: "May 2026",
         url: "https://coursera.org/verify/specialization/TO57ECI7XTAD",
-        description: "5 courses covering Introduction to AI, Productivity with AI Tools, Prompt Engineering, Responsible AI, and Staying Ahead of AI Trends.",
-        icon: "⚡"
+        description: "Rigorous 5-course certification covering foundational Machine Learning principles, AI-driven productivity workflows, Ethics & Responsible AI deployment, and future AI system architecture.",
+        skillsCovered: ["AI Workflow Automation", "Prompt Design", "Ethical AI Standards", "Data Analysis"],
+        iconName: "Zap"
     }
 ];

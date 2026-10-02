@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Menu, X, Code2, User, Mail, FolderHeart } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
@@ -56,6 +57,36 @@ const Navbar = () => {
         { name: 'Contact', href: '#contact', icon: <Mail size={18} /> },
     ];
 
+    const [activeSection, setActiveSection] = useState('about');
+
+    useEffect(() => {
+        const handleIntersect = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        };
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-40% 0px -60% 0px',
+            threshold: 0
+        };
+        const observer = new IntersectionObserver(handleIntersect, observerOptions);
+        
+        // Wait a tick for DOM to mount
+        setTimeout(() => {
+            navLinks.forEach(link => {
+                const id = link.href.substring(1);
+                const el = document.getElementById(id);
+                if (el) observer.observe(el);
+            });
+        }, 100);
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
             <div className="nav-content">
@@ -63,18 +94,28 @@ const Navbar = () => {
                     <a href="#" className="logo" aria-label="Udeep Chowdary Home Page Logo">
                         U<span className="dot">.</span>
                     </a>
-                    <div className="status-indicator">
+                    <div className="status-indicator" title="Actively looking for AI/ML and Software Engineering roles">
                         <span className="pulse-dot"></span>
-                        <span className="status-text">Available for Work</span>
+                        <span className="status-text">Available for AI/ML Roles</span>
                     </div>
                 </div>
 
                 <div className="desktop-nav">
-                    {navLinks.map((link) => (
-                        <a key={link.name} href={link.href} className="nav-link">
-                            {link.name}
-                        </a>
-                    ))}
+                    {navLinks.map((link) => {
+                        const isActive = activeSection === link.href.substring(1);
+                        return (
+                            <a key={link.name} href={link.href} className={`nav-link ${isActive ? 'active' : ''}`}>
+                                {isActive && (
+                                    <motion.div 
+                                        layoutId="nav-indicator"
+                                        className="nav-indicator"
+                                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                                    />
+                                )}
+                                <span className="nav-link-text">{link.name}</span>
+                            </a>
+                        );
+                    })}
                 </div>
 
                 <div className="nav-actions">

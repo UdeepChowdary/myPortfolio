@@ -1,46 +1,63 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
-const RevealOnScroll = ({ children, threshold = 0.1, delay = 0 }) => {
-    const [isVisible, setIsVisible] = useState(false);
+/**
+ * RevealOnScroll — Lenis-aware scroll reveal component.
+ *
+ * Uses Framer Motion's useScroll + useTransform to create a continuous,
+ * scroll-position-linked entrance animation. With Lenis providing smooth
+ * interpolated scroll values, the animation feels physically connected
+ * to the user's gesture rather than snapping on IntersectionObserver fire.
+ *
+ * Props:
+ *  - children    : content to reveal
+ *  - delay       : stagger delay in seconds (default 0)
+ *  - distance    : how far (in px) the element travels upward on entry (default 40)
+ *  - once        : if true, only plays once (default true, keeps perf optimal)
+ *  - threshold   : inView trigger threshold 0–1 (default 0.12)
+ */
+const RevealOnScroll = ({
+    children,
+    delay = 0,
+    distance = 40,
+    once = true,
+    threshold = 0.12,
+}) => {
     const ref = useRef(null);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.unobserve(entry.target);
-                }
-            },
-            {
-                threshold: threshold,
-                rootMargin: '0px 0px -50px 0px'
-            }
-        );
+    // useInView for triggering — stays accurate via Lenis scroll position
+    const isInView = useInView(ref, {
+        once,
+        margin: '0px 0px -60px 0px',
+        amount: threshold,
+    });
 
-        const currentElement = ref.current;
-        if (currentElement) {
-            observer.observe(currentElement);
-        }
+    // Scroll-linked depth parallax (subtle upward drift as section enters viewport)
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ['start end', 'end start'],
+    });
 
-        return () => {
-            if (currentElement) {
-                observer.unobserve(currentElement);
-            }
-        };
-    }, [threshold]);
+    // Maps scroll progress [0→0.25] to translateY [distance→0]
+    // The element drifts in from below, driven by actual scroll position
+    const y = useTransform(scrollYProgress, [0, 0.25], [distance * 0.5, 0]);
 
     return (
-        <div
+        <motion.div
             ref={ref}
-            style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-                transition: `opacity 0.8s ease ${delay}s, transform 0.8s ease ${delay}s`
+            style={{ y }}   // scroll-linked subtle drift
+            animate={{
+                opacity: isInView ? 1 : 0,
+                // Fine vertical shift driven by inView trigger (spring physics)
+                translateY: isInView ? 0 : distance,
+            }}
+            transition={{
+                opacity: { duration: 0.75, delay, ease: [0.25, 0.46, 0.45, 0.94] },
+                translateY: { duration: 0.75, delay, ease: [0.25, 0.46, 0.45, 0.94] },
             }}
         >
             {children}
-        </div>
+        </motion.div>
     );
 };
 

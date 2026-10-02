@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal as TerminalIcon, X } from 'lucide-react';
+import { useLenis } from 'lenis/react';
 import { COMMANDS, VIRTUAL_FS } from '../data/terminalCommands';
 import './Terminal.css';
 
@@ -438,17 +439,24 @@ const Terminal = ({ isOpen, onClose, onOpen }) => {
         }
     }, [history, isOpen, isSnakeActive]);
 
-    // Lock body scroll when terminal is open
+
+    // Stop Lenis smooth scroll when terminal is open so it doesn't
+    // conflict with the overlay's own scroll lock
+    const lenis = useLenis();
     useEffect(() => {
+        if (!lenis) return;
         if (isOpen) {
+            lenis.stop();
             document.body.style.overflow = 'hidden';
         } else {
+            lenis.start();
             document.body.style.overflow = 'unset';
         }
         return () => {
+            lenis.start();
             document.body.style.overflow = 'unset';
         };
-    }, [isOpen]);
+    }, [isOpen, lenis]);
 
     // Handle keyboard shortcut (Ctrl+`)
     useEffect(() => {

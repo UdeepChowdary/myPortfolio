@@ -93,12 +93,18 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+    perspective: 1500px;
 }
 
 .skills-category-card:hover {
-    border-color: rgba(0, 240, 255, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 240, 255, 0.1);
+    transform: translateY(-8px) rotateX(3deg) rotateY(-3deg);
+    border-color: rgba(0, 240, 255, 0.35);
+    box-shadow: 
+        0 20px 40px -10px rgba(0, 0, 0, 0.6), 
+        0 0 25px rgba(0, 240, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .category-card-header {
@@ -107,6 +113,8 @@
     gap: 0.75rem;
     padding-bottom: 0.75rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transform: translateZ(20px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="light"] .category-card-header {
@@ -146,7 +154,8 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
     cursor: default;
-    transition: all 0.25s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateZ(10px);
 }
 
 [data-theme="light"] .skill-chip {
@@ -154,9 +163,15 @@
     border-color: rgba(0, 0, 0, 0.06);
 }
 
+.skills-category-card:hover .skill-chip {
+    transform: translateZ(35px);
+}
+
 .skill-chip:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(0, 240, 255, 0.25);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 240, 255, 0.35);
+    transform: translateZ(60px) scale(1.05) !important;
+    box-shadow: 0 12px 25px rgba(0, 240, 255, 0.2);
 }
 
 [data-theme="light"] .skill-chip:hover {

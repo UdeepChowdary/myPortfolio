@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Copy, Check, Send, Sparkles } from 'lucide-react';
+import { Mail, Copy, Check, Send, CheckCircle2 } from 'lucide-react';
 import './Contact.css';
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_URL || 'https://formspree.io/f/mlgvjknq';
@@ -68,25 +68,22 @@ const Contact = () => {
       <div className="container contact-container">
         <motion.div
           className="contact-content glass-panel"
-          initial={{ opacity: 0, y: 35 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
         >
           <div className="contact-section-header">
-            <div className="contact-badge">
-              <Sparkles size={13} /> LET'S CONNECT
-            </div>
-            <h2>Get In <span className="gradient-text">Touch</span></h2>
+            <h2>Get In Touch</h2>
             <p className="contact-subtext">
-              Have a project, opportunity, or collaboration in mind? Feel free to reach out anytime!
+              Have an AI engineering role, research opportunity, or technical collaboration in mind? Feel free to reach out directly.
             </p>
             
-            <div className="email-copy-bar glass-panel" onClick={handleCopyEmail}>
+            <div className="email-copy-bar glass-panel" onClick={handleCopyEmail} role="button" tabIndex={0} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleCopyEmail()}>
               <Mail size={16} className="email-icon" />
               <span>udeepchowdary06@gmail.com</span>
-              <button className="copy-btn" title="Copy Email">
-                {copied ? <Check size={14} style={{ color: '#4ade80' }} /> : <Copy size={14} />}
+              <button className="copy-btn" title="Copy Email" aria-label="Copy email address">
+                {copied ? <Check size={14} style={{ color: '#10b981' }} /> : <Copy size={14} />}
                 {copied && <span className="copied-tooltip">Copied!</span>}
               </button>
             </div>
@@ -97,12 +94,14 @@ const Contact = () => {
               <motion.div
                 key="success"
                 className="form-feedback success"
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.92 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.35 }}
               >
-                <span className="feedback-icon">🎉</span>
+                <div className="feedback-icon-container">
+                  <CheckCircle2 size={36} className="feedback-check" />
+                </div>
                 <h3>Message Received!</h3>
                 <p>Thank you for reaching out. I'll get back to you promptly.</p>
                 <button
@@ -149,19 +148,23 @@ const Contact = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
-                    ⚠️ {errorMsg}
+                    {errorMsg}
                   </motion.p>
                 )}
 
                 <button
                   type="submit"
-                  className={`btn btn-primary submit-btn ${status === 'loading' ? 'btn-loading' : ''}`}
+                  className="btn btn-primary submit-btn"
                   disabled={status === 'loading'}
                 >
                   {status === 'loading' ? (
-                    <span className="spinner-wrap"><span className="spinner" /> Sending…</span>
+                    <span className="btn-loading-state">
+                      <span className="spinner-dot" /> Sending...
+                    </span>
                   ) : (
-                    <>Send Message <Send size={16} /></>
+                    <>
+                      Send Message <Send size={15} />
+                    </>
                   )}
                 </button>
               </motion.form>

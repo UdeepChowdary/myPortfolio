@@ -16,27 +16,39 @@ export const journeyData = [
         year: "2025",
         dateRange: "Summer 2025",
         title: "AIFT Summer Challenge 2025",
-        subtitle: "3rd Place Winner - Derm-AI",
+        subtitle: "2nd Runner-Up — Derm.AI",
         type: "competition",
         icon: "Trophy",
-        description: "Secured 3rd place in the AIFT Summer Challenge, a 2-month class competition held during summer break. Built Derm-AI, a computer vision model that analyzes skin images to deliver health insights.",
-        highlights: ["3rd Place Winner", "Built Derm-AI during a 2-month class summer challenge"],
-        skills: ["Python", "TensorFlow", "Computer Vision", "React"]
+        description: "2nd Runner-Up in the AIFT Summer Challenge. Co-developed Derm.AI, an AI-powered web app for skin conditions.",
+        highlights: ["2nd Runner-Up", "Co-developed Derm.AI AI-Powered Web App"],
+        skills: ["React", "TensorFlow.js", "Autoderm API", "Python", "Computer Vision"]
     },
     {
         id: 3,
         year: "2025",
         dateRange: "Fall 2025",
-        title: "Hack MSC 2.0 National Hackathon",
-        subtitle: "5th Place Winner (₹5,000 Cash Prize)",
+        title: "Hack MSC 2.0",
+        subtitle: "4th Runner-Up — IoT Mining Safety",
         type: "award",
         icon: "Award",
-        description: "Awarded 5th place among 100+ competing teams nationwide and won a ₹5,000 cash prize. Built a Mine Safety System featuring IoT hardware and a web dashboard in a team of 5, leading the web development implementation.",
-        highlights: ["5th Place out of 100+ Teams Nationwide", "Won ₹5,000 Cash Prize", "Built Mine Safety System (IoT Hardware + Web App)"],
-        skills: ["React", "Node.js", "Express", "IoT / Web Integration", "Teamwork"]
+        description: "4th Runner-Up in Hack MSC 2.0. Co-developed an IoT safety monitoring system for mining workers.",
+        highlights: ["4th Runner-Up", "Co-developed IoT safety monitoring system for mining workers"],
+        skills: ["React", "Node.js", "Express", "IoT Integration", "Teamwork"]
     },
     {
         id: 4,
+        year: "2026",
+        dateRange: "2026",
+        title: "IEEE Genesis Hackathon 2026",
+        subtitle: "1st Place (AI/ML Track) — OpsPilot",
+        type: "award",
+        icon: "Trophy",
+        description: "1st Place (AI/ML Track) in IEEE Genesis Hackathon 2026. Built OpsPilot, an autonomous AIOps system.",
+        highlights: ["1st Place (AI/ML Track)", "Built OpsPilot autonomous AIOps system"],
+        skills: ["Python", "Machine Learning", "DevOps", "AIOps", "Automation"]
+    },
+    {
+        id: 5,
         year: "2026",
         dateRange: "May 2026 – Present",
         title: "GirlScript Summer of Code (GSSoC) 2026",
