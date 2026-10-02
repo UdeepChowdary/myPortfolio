@@ -33,6 +33,17 @@
 
   <!-- Theme color for mobile browsers -->
   <meta name="theme-color" content="#020205" />
+
+  <!-- Set theme before React loads to prevent flashing -->
+  <script>
+    (function() {
+      try {
+        var localTheme = localStorage.getItem('theme');
+        var themeToSet = localTheme ? localTheme : 'dark';
+        document.documentElement.setAttribute('data-theme', themeToSet);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>

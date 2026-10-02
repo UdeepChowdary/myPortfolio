@@ -1,8 +1,9 @@
 import React, { useState, Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Routes, Route } from 'react-router-dom';
 import { ReactLenis } from 'lenis/react';
 
+import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import BackToTop from './components/BackToTop';
 import NotFound from './components/NotFound';
@@ -12,6 +13,7 @@ const Terminal = React.lazy(() => import('./components/Terminal'));
 
 function App() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <ReactLenis
@@ -25,31 +27,38 @@ function App() {
         infinite: false,
       }}
     >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
-        className="app"
-      >
-        {/* Abstract background grid overlay */}
-        <div className="global-bg-texture"></div>
+      <AnimatePresence mode="wait">
+        {isLoading ? (
+          <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
+        ) : (
+          <motion.div
+            key="app-content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+            className="app"
+          >
+            {/* Abstract background grid overlay */}
+            <div className="global-bg-texture"></div>
 
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home onTerminalClick={() => setIsTerminalOpen(true)} />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Suspense fallback={null}>
-          <Terminal 
-            isOpen={isTerminalOpen} 
-            onClose={() => setIsTerminalOpen(false)} 
-            onOpen={() => setIsTerminalOpen(true)} 
-          />
-        </Suspense>
-        <BackToTop />
-      </motion.div>
+            <Navbar />
+            <main>
+              <Routes>
+                <Route path="/" element={<Home onTerminalClick={() => setIsTerminalOpen(true)} />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Suspense fallback={null}>
+              <Terminal 
+                isOpen={isTerminalOpen} 
+                onClose={() => setIsTerminalOpen(false)} 
+                onOpen={() => setIsTerminalOpen(true)} 
+              />
+            </Suspense>
+            <BackToTop />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </ReactLenis>
   );
 }

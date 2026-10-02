@@ -1,0 +1,87 @@
+.preloader-container {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg); /* Use theme bg so it matches dark/light mode */
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
+    max-width: 600px;
+}
+
+.preloader-logs {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.preloader-counter {
+    display: flex;
+    align-items: baseline;
+    font-family: var(--font-display);
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.counter-number {
+    font-size: clamp(5rem, 12vw, 10rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.counter-percent {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-family: var(--font-mono);
+    color: var(--red);
+    margin-left: 0.5rem;
+}
+
+.preloader-progress-container {
+    width: 100%;
+    height: 2px;
+    background-color: var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.preloader-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--red);
+    transition: width 0.1s linear;
+}
+
+/* Cinematic Corners */
+.pl-corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-color: var(--red);
+    border-style: solid;
+    opacity: 0.8;
+}
+
+.pl-corner.tl { top: 2rem; left: 2rem; border-width: 2px 0 0 2px; }
+.pl-corner.tr { top: 2rem; right: 2rem; border-width: 2px 2px 0 0; }
+.pl-corner.bl { bottom: 2rem; left: 2rem; border-width: 0 0 2px 2px; }
+.pl-corner.br { bottom: 2rem; right: 2rem; border-width: 0 2px 2px 0; }
