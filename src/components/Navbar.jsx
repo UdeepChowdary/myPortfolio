@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import HireMeModal from './HireMeModal';
 import './Navbar.css';
 
 // Defined outside the component so the reference is stable
@@ -17,6 +18,7 @@ const Navbar = () => {
     const [isScrolled,    setIsScrolled]    = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
     const [mobileOpen,    setMobileOpen]    = useState(false);
+    const [hireMeOpen,    setHireMeOpen]    = useState(false);
 
     // Scroll: add border shadow once user moves off top
     useEffect(() => {
@@ -26,7 +28,7 @@ const Navbar = () => {
     }, []);
 
     // Active section via IntersectionObserver
-    // NAV_LINKS is stable (module-level), so this only fires once
+    // Handles lazy-loaded sections by polling until all sections are found
     useEffect(() => {
         const handleIntersect = (entries) => {
             entries.forEach((entry) => {
@@ -36,25 +38,36 @@ const Navbar = () => {
 
         const observer = new IntersectionObserver(handleIntersect, {
             root: null,
-            rootMargin: '-40% 0px -60% 0px',
+            rootMargin: '-20% 0px -40% 0px',
             threshold: 0,
         });
 
         const ids = ['hero', ...NAV_LINKS.map(l => l.href.substring(1))];
+        const observedElements = new Set();
 
-        // Small delay so sections are rendered before observation starts
-        const timer = setTimeout(() => {
+        const checkElements = () => {
             ids.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) observer.observe(el);
+                if (!observedElements.has(id)) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        observer.observe(el);
+                        observedElements.add(id);
+                    }
+                }
             });
-        }, 150);
+            if (observedElements.size === ids.length) {
+                clearInterval(interval);
+            }
+        };
+
+        const interval = setInterval(checkElements, 250);
+        checkElements();
 
         return () => {
-            clearTimeout(timer);
+            clearInterval(interval);
             observer.disconnect();
         };
-    }, []); // ✅ stable dep array — no more infinite loop
+    }, []); // ✅ stable dep array
 
     // Close mobile menu on route-like scroll (any anchor click)
     const handleNavClick = useCallback(() => setMobileOpen(false), []);
@@ -91,6 +104,10 @@ const Navbar = () => {
                     </div>
 
                     <div className="nav-actions">
+                        <button className="hire-me-btn" onClick={() => setHireMeOpen(true)}>
+                            <span className="hire-me-dot"></span>
+                            HIRE ME
+                        </button>
                         <ThemeToggle />
                         {/* Hamburger — mobile only */}
                         <button
@@ -135,6 +152,9 @@ const Navbar = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Hire Me Modal */}
+            <HireMeModal isOpen={hireMeOpen} onClose={() => setHireMeOpen(false)} />
         </>
     );
 };

@@ -1,0 +1,260 @@
+.hire-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999; /* Above navbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.hire-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.hire-modal-content {
+    position: relative;
+    background: var(--bg);
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    z-index: 1;
+}
+
+.hire-modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.hire-modal-close:hover {
+    color: var(--text);
+    border-color: var(--text);
+}
+
+.hire-modal-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    min-height: 650px;
+}
+
+/* Left Side: Form */
+.hire-form-section {
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.hire-availability {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+}
+
+.sparkle-icon {
+    color: var(--red);
+}
+
+.hire-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.hire-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+}
+
+.hire-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text);
+}
+
+.required {
+    color: var(--red);
+}
+
+.input-group input,
+.input-group textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.hire-submit-btn {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 1.25rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.hire-submit-btn:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+}
+
+.hire-direct-contact {
+    margin-top: auto;
+    padding-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.hire-direct-contact a {
+    color: var(--red);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.hire-direct-contact a:hover {
+    text-decoration: underline;
+}
+
+/* Right Side: Resume Preview */
+.hire-resume-section {
+    background: var(--surface);
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid var(--border);
+}
+
+.resume-preview-container {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1.414; /* A4 Ratio */
+    background: #fff; /* Paper color */
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.resume-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none; /* Prevent iframe from capturing scroll inside modal if it's just a preview */
+}
+
+.resume-download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s ease;
+}
+
+.resume-download-btn:hover {
+    color: #e85d04;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .hire-modal-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+    
+    .hire-resume-section {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding: 3rem 2rem;
+    }
+    
+    .hire-form-section {
+        padding: 3rem 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .hire-form-section {
+        padding: 2.5rem 1.5rem;
+    }
+    .hire-resume-section {
+        padding: 2.5rem 1.5rem;
+    }
+}

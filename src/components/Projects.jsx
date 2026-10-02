@@ -19,6 +19,10 @@ const StackedCard = ({ project, i, progress }) => {
     const targetOpacity = 1 - (((N - 1) - i) * 0.15);
     const opacity = useTransform(progress, [start, end], [1, targetOpacity]);
 
+    // Parallax effect for the image inside the card
+    // The image will slowly pan downwards as the user scrolls through the entire projects section
+    const imageY = useTransform(progress, [0, 1], ['-10%', '10%']);
+
     // Offset each card slightly lower than the previous one so they create a visible "stack" edge
     const topOffset = `calc(var(--nav-height) + 120px + ${i * 25}px)`;
 
@@ -61,11 +65,11 @@ const StackedCard = ({ project, i, progress }) => {
                     <div className="pc-img-frame">
                         {project.imageLight && project.imageDark ? (
                             <>
-                                <img src={project.imageLight} alt={project.title} className="pc-img pc-img--light" loading="lazy" />
-                                <img src={project.imageDark}  alt={project.title} className="pc-img pc-img--dark"  loading="lazy" />
+                                <motion.img style={{ y: imageY, scale: 1.2 }} src={project.imageLight} alt={project.title} className="pc-img pc-img--light" loading="lazy" />
+                                <motion.img style={{ y: imageY, scale: 1.2 }} src={project.imageDark}  alt={project.title} className="pc-img pc-img--dark"  loading="lazy" />
                             </>
                         ) : project.image ? (
-                            <img src={project.image} alt={project.title} className="pc-img" loading="lazy" />
+                            <motion.img style={{ y: imageY, scale: 1.2 }} src={project.image} alt={project.title} className="pc-img" loading="lazy" />
                         ) : (
                             <div className="pc-img-placeholder" />
                         )}
