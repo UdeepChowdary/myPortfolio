@@ -18,9 +18,10 @@
     max-width: 750px;
     height: 65vh;
     min-height: 400px;
-    background: rgba(18, 18, 20, 0.95);
-    border-radius: 12px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1);
+    background: var(--surface);
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -28,22 +29,23 @@
 }
 
 [data-theme="light"] .terminal-window {
-    background: rgba(240, 240, 245, 0.95);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.1);
+    background: var(--surface);
+    box-shadow: none;
+    border: 1px solid var(--border);
 }
 
 .terminal-header {
-    background: rgba(45, 45, 50, 0.8);
+    background: var(--bg);
     padding: 0.8rem 1rem;
     display: flex;
     align-items: center;
     position: relative;
-    border-bottom: 1px solid rgba(0,0,0,0.5);
+    border-bottom: 1px solid var(--border);
 }
 
 [data-theme="light"] .terminal-header {
-    background: rgba(220, 220, 225, 0.8);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
 }
 
 .terminal-buttons {
@@ -219,15 +221,15 @@
     width: 100%;
     max-width: 340px;
     aspect-ratio: 1 / 1;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border: 1px solid var(--border);
+    border-radius: 0;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: none;
 }
 
 [data-theme="light"] .game-board-area {
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--border);
+    box-shadow: none;
 }
 
 .game-canvas {
@@ -265,21 +267,20 @@
 }
 
 .game-play-btn {
-    background: var(--accent-gradient);
+    background: var(--red);
     border: none;
     padding: 0.6rem 1.5rem;
-    border-radius: 8px;
+    border-radius: 0;
     color: white;
     font-family: inherit;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: none;
+    transition: background 0.2s;
 }
 
 .game-play-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+    background: #c81e1e; /* darker red */
 }
 
 /* Virtual Controller / Touch D-pad */

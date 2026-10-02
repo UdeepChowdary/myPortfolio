@@ -1,179 +1,44 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Copy, Check, Send, CheckCircle2 } from 'lucide-react';
+import React from 'react';
 import './Contact.css';
 
-const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_URL || 'https://formspree.io/f/mlgvjknq';
-
 const Contact = () => {
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
-  const [errorMsg, setErrorMsg] = useState('');
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText('udeepchowdary06@gmail.com');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus('loading');
-    setErrorMsg('');
-
-    const form = e.target;
-    const nameInput = form.elements.name;
-    const emailInput = form.elements.email;
-    const messageInput = form.elements.message;
-    const gotchaInput = form.elements._gotcha;
-    
-    // Honeypot anti-spam check
-    if (gotchaInput && gotchaInput.value) {
-      console.warn('Bot submission detected and blocked.');
-      setStatus('success');
-      form.reset();
-      return;
-    }
-
-    const data = {
-      name: nameInput ? nameInput.value : '',
-      email: emailInput ? emailInput.value : '',
-      message: messageInput ? messageInput.value : '',
-    };
-
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (res.ok) {
-        setStatus('success');
-        form.reset();
-      } else {
-        const json = await res.json();
-        setErrorMsg(json?.errors?.[0]?.message || 'Something went wrong. Please try again.');
-        setStatus('error');
-      }
-    } catch (err) {
-      console.error('Form submission network error:', err);
-      setErrorMsg('Network error. Please check your connection and try again.');
-      setStatus('error');
-    }
-  };
-
-  return (
-    <section id="contact" className="contact-section">
-      <div className="container contact-container">
-        <motion.div
-          className="contact-content glass-panel"
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="contact-section-header">
-            <h2>Get In Touch</h2>
-            <p className="contact-subtext">
-              Have an AI engineering role, research opportunity, or technical collaboration in mind? Feel free to reach out directly.
-            </p>
-            
-            <div className="email-copy-bar glass-panel" onClick={handleCopyEmail} role="button" tabIndex={0} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleCopyEmail()}>
-              <Mail size={16} className="email-icon" />
-              <span>udeepchowdary06@gmail.com</span>
-              <button className="copy-btn" title="Copy Email" aria-label="Copy email address">
-                {copied ? <Check size={14} style={{ color: '#10b981' }} /> : <Copy size={14} />}
-                {copied && <span className="copied-tooltip">Copied!</span>}
-              </button>
+    return (
+        <section id="contact" className="contact-section">
+            <div className="container contact-container">
+                <div className="contact-main">
+                    <h2 className="contact-heading">
+                        <span className="contact-heading-line">LET'S</span>
+                        <span className="contact-heading-line text-red">BUILD</span>
+                        <span className="contact-heading-line">SOMETHING</span>
+                        <span className="contact-heading-line">USEFUL.</span>
+                    </h2>
+                </div>
+                
+                <div className="contact-links">
+                    <div className="contact-rule"></div>
+                    <div className="contact-links-grid">
+                        <a href="mailto:udeepchowdary06@gmail.com" className="contact-link">
+                            <span className="link-label">EMAIL</span>
+                            <span className="link-value">udeepchowdary06@gmail.com</span>
+                        </a>
+                        <a href="https://github.com/UdeepChowdary" target="_blank" rel="noopener noreferrer" className="contact-link">
+                            <span className="link-label">GITHUB</span>
+                            <span className="link-value">@UdeepChowdary</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/udeep-chowdary-naripeddi-99908627b" target="_blank" rel="noopener noreferrer" className="contact-link">
+                            <span className="link-label">LINKEDIN</span>
+                            <span className="link-value">Udeep Chowdary Naripeddi</span>
+                        </a>
+                        <a href="/UdeepChowdaryNaripeddi_resume.pdf" download="UdeepChowdaryNaripeddi_Resume.pdf" className="contact-link">
+                            <span className="link-label">RESUME</span>
+                            <span className="link-value">Download PDF</span>
+                        </a>
+                    </div>
+                    <div className="contact-rule"></div>
+                </div>
             </div>
-          </div>
-
-          <AnimatePresence mode="wait">
-            {status === 'success' ? (
-              <motion.div
-                key="success"
-                className="form-feedback success"
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35 }}
-              >
-                <div className="feedback-icon-container">
-                  <CheckCircle2 size={36} className="feedback-check" />
-                </div>
-                <h3>Message Received!</h3>
-                <p>Thank you for reaching out. I'll get back to you promptly.</p>
-                <button
-                  className="btn btn-outline"
-                  onClick={() => setStatus('idle')}
-                >
-                  Send Another Message
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                className="contact-form"
-                onSubmit={handleSubmit}
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <div className="sr-only" aria-hidden="true">
-                  <label htmlFor="contact-gotcha">Do not fill this out if you are human</label>
-                  <input id="contact-gotcha" type="text" name="_gotcha" tabIndex="-1" autoComplete="off" />
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <input id="contact-name" type="text" name="name" placeholder="Name" required disabled={status === 'loading'} />
-                    <label htmlFor="contact-name" className="form-label">Name</label>
-                  </div>
-                  <div className="form-group">
-                    <input id="contact-email" type="email" name="email" placeholder="Email" required disabled={status === 'loading'} />
-                    <label htmlFor="contact-email" className="form-label">Email</label>
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <textarea id="contact-message" name="message" placeholder="Message" rows="4" required disabled={status === 'loading'} />
-                  <label htmlFor="contact-message" className="form-label">Message</label>
-                </div>
-
-                {status === 'error' && (
-                  <motion.p
-                    role="alert"
-                    aria-live="assertive"
-                    className="form-error"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    {errorMsg}
-                  </motion.p>
-                )}
-
-                <button
-                  type="submit"
-                  className="btn btn-primary submit-btn"
-                  disabled={status === 'loading'}
-                >
-                  {status === 'loading' ? (
-                    <span className="btn-loading-state">
-                      <span className="spinner-dot" /> Sending...
-                    </span>
-                  ) : (
-                    <>
-                      Send Message <Send size={15} />
-                    </>
-                  )}
-                </button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default Contact;

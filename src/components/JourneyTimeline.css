@@ -1,295 +1,112 @@
-/* ============================================
-   ELEVATED JOURNEY TIMELINE
-   ============================================ */
-
 .journey-section {
-    padding: 4.5rem 0 4rem;
+    padding: 8rem 0;
+    background-color: var(--bg);
+}
+
+.timeline-container {
     position: relative;
-    overflow: hidden;
+    max-width: 800px;
+    margin: 4rem auto 0;
+    padding-left: 2rem;
 }
 
-.journey-section-header {
-    text-align: center;
-    max-width: 680px;
-    margin: 0 auto 2rem;
-}
-
-.journey-section-desc {
-    font-size: 1.05rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-top: -1.5rem;
-}
-
-.journey-filter-pills {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    margin-bottom: 3rem;
-}
-
-.journey-timeline {
-    position: relative;
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: 1rem 0;
-}
-
-/* Vertical pathway lines */
-.timeline-line-bg {
+.timeline-line {
     position: absolute;
-    width: 4px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
     top: 0;
     bottom: 0;
-    left: calc(50% - 2px);
-    z-index: 0;
+    left: 0;
+    width: 1px;
+    background-color: var(--border);
 }
 
-[data-theme="light"] .timeline-line-bg {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-.timeline-glow-line {
-    position: absolute;
-    width: 4px;
-    border-radius: 4px;
-    background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-violet));
-    top: 0;
-    bottom: 0;
-    left: calc(50% - 2px);
-    z-index: 1;
-    box-shadow: 0 0 15px var(--accent-cyan), 0 0 30px var(--accent-violet);
-}
-
-.journey-item {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 50%;
-    position: relative;
-    margin-bottom: 3.25rem;
-    width: 100%;
-}
-
-.journey-item.right {
-    justify-content: flex-start;
-    padding-right: 0;
-    padding-left: 50%;
-}
-
-/* Center Node */
-.timeline-node {
-    position: absolute;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: var(--bg-dark-elevated);
-    border: 2px solid var(--accent-cyan);
-    left: 50%;
-    top: 22px;
-    transform: translate(-50%, -20%) !important;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
-    transition: all 0.3s ease;
-}
-
-.timeline-node:hover {
-    transform: translate(-50%, -20%) scale(1.1) !important;
-    border-color: var(--accent-violet);
-    box-shadow: 0 0 25px rgba(157, 78, 221, 0.5);
-}
-
-.node-icon-wrapper {
-    color: var(--accent-cyan);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Card Wrapper & Card */
-.journey-card-wrapper {
-    width: 100%;
-    padding: 0 2.25rem;
-}
-
-.journey-card {
-    padding: 1.75rem;
-    border-radius: 18px;
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: var(--glass-shadow);
-}
-
-[data-theme="light"] .journey-card {
-    background: rgba(255, 255, 255, 0.92);
-    border-color: rgba(0, 40, 80, 0.12);
-}
-
-.journey-card:hover {
-    border-color: rgba(0, 240, 255, 0.35);
-    box-shadow: var(--glass-shadow-hover);
-    transform: translateY(-2px);
-}
-
-/* Badge Container */
-.card-badge-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.9rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.card-year {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.78rem;
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-}
-
-.card-type-badge {
-    font-size: 0.74rem;
-    font-weight: 700;
-    padding: 0.25rem 0.65rem;
-    border-radius: 9999px;
-    letter-spacing: -0.01em;
-}
-
-.card-type-badge.education {
-    background: rgba(0, 240, 255, 0.1);
-    color: var(--accent-cyan);
-    border: 1px solid rgba(0, 240, 255, 0.25);
-}
-
-.card-type-badge.competition {
-    background: rgba(245, 158, 11, 0.12);
-    color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-.card-type-badge.award {
-    background: rgba(168, 85, 247, 0.12);
-    color: var(--accent-violet);
-    border: 1px solid rgba(168, 85, 247, 0.3);
-}
-
-.card-type-badge.opensource {
-    background: rgba(16, 185, 129, 0.12);
-    color: #10b981;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-/* Card Meta */
-.card-meta {
-    margin-bottom: 0.85rem;
-}
-
-.card-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-}
-
-.card-subtitle {
-    font-size: 0.96rem;
-    font-weight: 600;
-    color: var(--accent-cyan);
-    margin: 0.3rem 0;
-}
-
-.card-date-range {
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    color: var(--text-muted);
-}
-
-.card-description {
-    font-size: 0.92rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 1.1rem;
-}
-
-/* Highlights */
-.card-highlights {
+.timeline-events {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
-    padding: 0.8rem 1rem;
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    margin-bottom: 1.1rem;
+    gap: 6rem;
 }
 
-[data-theme="light"] .card-highlights {
-    background: rgba(0, 0, 0, 0.02);
-    border-color: rgba(0, 0, 0, 0.06);
+.timeline-event {
+    position: relative;
 }
 
-.highlight-row {
+.timeline-node {
+    position: absolute;
+    left: -2rem;
+    top: 0.25rem;
+    width: 9px;
+    height: 9px;
+    background-color: var(--red);
+    transform: translateX(-4.5px);
+}
+
+.timeline-content {
     display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    font-size: 0.84rem;
-    color: var(--text-secondary);
-    line-height: 1.45;
+    flex-direction: column;
 }
 
-.highlight-bullet-icon {
-    color: var(--accent-cyan);
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-/* Card Tags */
-.card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-}
-
-.journey-tag {
+.timeline-date {
     font-family: var(--font-mono);
-    font-size: 0.74rem;
-    padding: 0.24rem 0.55rem;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    color: var(--text-secondary);
+    font-size: 0.875rem;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .timeline-line-bg,
-    .timeline-glow-line {
-        left: 22px;
-    }
+.timeline-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
 
-    .journey-item,
-    .journey-item.right {
-        padding-left: 56px;
-        padding-right: 0;
-        justify-content: flex-start;
-    }
+.timeline-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
 
+.timeline-description {
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.timeline-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.timeline-highlight {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.highlight-bullet {
+    color: var(--red);
+    font-family: var(--font-mono);
+}
+
+@media (max-width: 767px) {
+    .timeline-container {
+        padding-left: 1.5rem;
+        margin-left: 0.5rem;
+    }
     .timeline-node {
-        left: 24px;
+        left: -1.5rem;
     }
-
-    .journey-card-wrapper {
-        padding: 0;
+    .timeline-events {
+        gap: 4rem;
+    }
+    .timeline-title {
+        font-size: 1.5rem;
     }
 }

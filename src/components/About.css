@@ -1,0 +1,51 @@
+.about-section {
+    padding: 8rem 0;
+    background-color: var(--bg);
+}
+
+.about-statement-col {
+    grid-column: span 7;
+}
+
+.about-text-col {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 1rem;
+}
+
+.about-statement {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    color: var(--text);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.about-paragraph {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+@media (max-width: 1099px) {
+    .about-statement-col {
+        grid-column: span 6;
+    }
+    .about-text-col {
+        grid-column: span 6;
+        padding-top: 2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .about-statement-col,
+    .about-text-col {
+        grid-column: span 1;
+    }
+    .about-statement {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+}

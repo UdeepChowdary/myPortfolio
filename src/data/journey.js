@@ -38,25 +38,37 @@ export const journeyData = [
     {
         id: 4,
         year: "2026",
-        dateRange: "2026",
-        title: "IEEE Genesis Hackathon 2026",
-        subtitle: "1st Place (AI/ML Track) — OpsPilot",
-        type: "award",
-        icon: "Trophy",
-        description: "1st Place (AI/ML Track) in IEEE Genesis Hackathon 2026. Built OpsPilot, an autonomous AIOps system.",
-        highlights: ["1st Place (AI/ML Track)", "Built OpsPilot autonomous AIOps system"],
-        skills: ["Python", "Machine Learning", "DevOps", "AIOps", "Automation"]
-    },
-    {
-        id: 5,
-        year: "2026",
-        dateRange: "May 2026 – Present",
+        dateRange: "Summer 2026",
         title: "GirlScript Summer of Code (GSSoC) 2026",
         subtitle: "Selected Open Source Contributor",
         type: "opensource",
         icon: "Sparkles",
-        description: "Selected as an Open Source Contributor for GSSoC 2026. Actively contributing code to production-grade repositories and collaborating with open-source developer communities.",
-        highlights: ["Selected Open Source Contributor", "Contributing to real-world open-source codebases"],
-        skills: ["Git", "GitHub", "Open Source", "JavaScript"]
+        description: "Selected as an Open Source Contributor for GSSoC 2026. Contributed code to production-grade repositories and collaborated with open-source developer communities throughout the summer.",
+        highlights: ["Selected Open Source Contributor", "Contributed to real-world open-source codebases"],
+        skills: ["Git", "GitHub", "Open Source", "JavaScript", "Python"]
+    },
+    {
+        id: 5,
+        year: "2026",
+        dateRange: "September 2026",
+        title: "IEEE Genesis Hackathon 2026",
+        subtitle: "1st Place (AI/ML Track) — OpsPilot",
+        type: "award",
+        icon: "Trophy",
+        description: "1st Place Winner in the AI/ML Track at IEEE Genesis Hackathon 2026. Built OpsPilot, an autonomous AIOps system for predictive anomaly detection and self-healing incident remediation.",
+        highlights: ["1st Place (AI/ML Track)", "Built OpsPilot autonomous AIOps system"],
+        skills: ["Python", "Machine Learning", "DevOps", "AIOps", "Automation"]
+    },
+    {
+        id: 6,
+        year: "2026",
+        dateRange: "Sep 2026 – Present",
+        title: "Open Source Contribution India (OSCI) 2026",
+        subtitle: "Active Open Source Contributor",
+        type: "opensource",
+        icon: "Sparkles",
+        description: "Enrolled and actively contributing to open-source software and collaborating with developer communities across India under the OSCI 2026 program.",
+        highlights: ["Active Open Source Contributor", "Nationwide open-source initiative"],
+        skills: ["Git", "GitHub", "Open Source", "Python", "Full Stack"]
     }
 ];

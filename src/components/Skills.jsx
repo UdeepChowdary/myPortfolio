@@ -1,168 +1,118 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-    Coffee, Terminal, Code2, Brain, Atom, Cpu, Database, Palette, 
-    GitBranch, Sparkles, Server, Globe, Wrench, Zap, Layers, Network, Monitor, Cloud
-} from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import './Skills.css';
 
-const SKILLS_CATEGORIES = [
+const DISCIPLINES = [
     {
-        id: "ai-data",
-        title: "AI & Data Systems",
-        icon: Sparkles,
+        number: '01',
+        category: 'AI & INTELLIGENT SYSTEMS',
+        headline: 'Computer Vision, RAG & Predictive Models',
+        proof: 'Validated in Derm.AI (2nd Runner-Up) & Emotion Support Engine',
         skills: [
-            { name: "Gemini API", iconName: "Sparkles", color: "#8e75ff" },
-            { name: "Anthropic Claude & Code", iconName: "Brain", color: "#d97757" },
-            { name: "Prompt Engineering", iconName: "Sparkles", color: "#ec4899" },
-            { name: "TensorFlow.js", iconName: "Brain", color: "#ff6f00" },
-            { name: "MongoDB & MySQL", iconName: "Database", color: "#47a248" },
-            { name: "DBMS Fundamentals", iconName: "Database", color: "#336791" }
+            { name: 'Gemini API', role: 'Multimodal Agents & Vision', highlight: true },
+            { name: 'TensorFlow.js', role: 'Client-Side Neural Graphs', highlight: false },
+            { name: 'Computer Vision', role: 'OpenCV & Preprocessing', highlight: false },
+            { name: 'RAG & Vector Search', role: 'Retrieval Augmented Gen', highlight: true },
+            { name: 'BiLSTM + BERT', role: 'Hybrid NLP Pipelines', highlight: false },
+            { name: 'Scikit-Learn', role: 'Predictive Classifiers', highlight: false }
         ]
     },
     {
-        id: "languages",
-        title: "Languages & Core CS",
-        icon: Code2,
+        number: '02',
+        category: 'FULL-STACK PLATFORMS',
+        headline: 'High-Throughput Web & Reactive Systems',
+        proof: 'Engineered in CampusHub & AlgoViz Studio (60 FPS Engine)',
         skills: [
-            { name: "Python", iconName: "Terminal", color: "#3776ab" },
-            { name: "Java", iconName: "Coffee", color: "#e76f51" },
-            { name: "JavaScript", iconName: "Code2", color: "#f7df1e" },
-            { name: "SQL", iconName: "Database", color: "#336791" },
-            { name: "Data Structures & Algorithms", iconName: "Layers", color: "#00f0ff" },
-            { name: "OOP Principles", iconName: "Code2", color: "#e76f51" }
+            { name: 'React 19 & Next.js', role: 'Modern Component Systems', highlight: true },
+            { name: 'Python', role: 'FastAPI & Streamlit Backends', highlight: true },
+            { name: 'Node.js & Express', role: 'RESTful Microservices', highlight: false },
+            { name: 'Tailwind CSS', role: 'Responsive Design Tokens', highlight: false },
+            { name: 'Framer Motion', role: 'Editorial Physics & Motion', highlight: false },
+            { name: 'Vite & Web APIs', role: 'Low-Latency Bundling', highlight: false }
         ]
     },
     {
-        id: "fullstack",
-        title: "Full Stack Web",
-        icon: Atom,
+        number: '03',
+        category: 'SYSTEMS, AIOps & FOUNDATIONS',
+        headline: 'Autonomous Telemetry & Core Engineering',
+        proof: '1st Place Winner (AI/ML Track) · IEEE Genesis 2026 for OpsPilot',
         skills: [
-            { name: "React.js", iconName: "Atom", color: "#61dafb" },
-            { name: "Next.js", iconName: "Globe", color: "#00f0ff" },
-            { name: "Node.js", iconName: "Cpu", color: "#339933" },
-            { name: "Express.js", iconName: "Server", color: "#a8b2d1" },
-            { name: "REST APIs & WebSockets", iconName: "Network", color: "#ff9900" },
-            { name: "HTML5 & CSS3", iconName: "Palette", color: "#e34f26" }
-        ]
-    },
-    {
-        id: "tools-systems",
-        title: "Tools & OS Systems",
-        icon: Wrench,
-        skills: [
-            { name: "Git & GitHub", iconName: "GitBranch", color: "#f05032" },
-            { name: "Linux / CLI", iconName: "Terminal", color: "#fbcb2b" },
-            { name: "Postman & VS Code", iconName: "Wrench", color: "#ff6c37" },
-            { name: "Vercel Deployment", iconName: "Cloud", color: "#00f0ff" },
-            { name: "Operating Systems", iconName: "Monitor", color: "#3776ab" },
-            { name: "Computer Networks", iconName: "Network", color: "#a855f7" }
+            { name: 'AIOps Automation', role: 'Predictive Anomaly Remediation', highlight: true },
+            { name: 'DSA & Algorithms', role: 'Graphs, DP & Optimization', highlight: false },
+            { name: 'Java & OOP', role: 'Object-Oriented Architecture', highlight: false },
+            { name: 'SQL & MongoDB', role: 'Relational & Document DBMS', highlight: false },
+            { name: 'Git & CI/CD', role: 'Branching & Automation', highlight: false },
+            { name: 'Linux / POSIX CLI', role: 'Shell Scripting & Workflows', highlight: false }
         ]
     }
-];
-
-const renderIcon = (iconName, color) => {
-    const props = { size: 18, style: { color } };
-    switch (iconName) {
-        case 'Coffee': return <Coffee {...props} />;
-        case 'Terminal': return <Terminal {...props} />;
-        case 'Code2': return <Code2 {...props} />;
-        case 'Brain': return <Brain {...props} />;
-        case 'Atom': return <Atom {...props} />;
-        case 'Cpu': return <Cpu {...props} />;
-        case 'Database': return <Database {...props} />;
-        case 'Palette': return <Palette {...props} />;
-        case 'Layers': return <Layers {...props} />;
-        case 'GitBranch': return <GitBranch {...props} />;
-        case 'Sparkles': return <Sparkles {...props} />;
-        case 'Server': return <Server {...props} />;
-        case 'Globe': return <Globe {...props} />;
-        case 'Wrench': return <Wrench {...props} />;
-        case 'Network': return <Network {...props} />;
-        case 'Monitor': return <Monitor {...props} />;
-        case 'Cloud': return <Cloud {...props} />;
-        default: return <Code2 {...props} />;
-    }
-};
-
-const FILTER_TABS = [
-    { id: 'all', label: 'All Stack' },
-    { id: 'ai-data', label: 'AI & Data' },
-    { id: 'languages', label: 'Languages & CS' },
-    { id: 'fullstack', label: 'Full Stack' },
-    { id: 'tools-systems', label: 'Tools & Systems' }
 ];
 
 const Skills = () => {
-    const [activeTab, setActiveTab] = useState('all');
-
-    const filteredCategories = SKILLS_CATEGORIES.filter(cat => 
-        activeTab === 'all' || cat.id === activeTab
-    );
-
     return (
         <section id="skills" className="skills-section">
             <div className="container">
-                {/* Header */}
-                <div className="skills-header">
-                    <div className="skills-badge">
-                        <Zap size={13} /> TECH STACK & CAPABILITIES
-                    </div>
-                    
-                    <h2 className="section-title">
-                        Technical Skills
-                    </h2>
+                {/* 05 SECTION HEADER */}
+                <div className="section-header">
+                    <span className="section-number">05</span>
+                    <h2 className="section-title">CAPABILITIES</h2>
+                    <div className="section-header-rule" />
                 </div>
 
-                {/* Filter Pills */}
-                <div className="skills-filter-pills" aria-label="Skill category filters">
-                    {FILTER_TABS.map(tab => (
-                        <button 
-                            key={tab.id}
-                            className={`filter-pill ${activeTab === tab.id ? 'active' : ''}`}
-                            onClick={() => setActiveTab(tab.id)}
+                {/* ARCHITECTURAL META BAR */}
+                <div className="skills-meta-bar">
+                    <span className="skills-meta-tag">[ SPEC SHEET // 2026 ]</span>
+                    <span className="skills-meta-center">APPLIED MACHINE LEARNING &amp; PRODUCTION RUNTIMES</span>
+                    <span className="skills-meta-status">
+                        <span className="skills-meta-dot" /> VERIFIED STACK
+                    </span>
+                </div>
+
+                {/* EDITORIAL DISCIPLINE ROWS */}
+                <div className="skills-matrix">
+                    {DISCIPLINES.map((discipline, dIdx) => (
+                        <motion.div 
+                            key={discipline.number}
+                            className="discipline-row"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-60px' }}
+                            transition={{ duration: 0.5, delay: dIdx * 0.1 }}
                         >
-                            {tab.label}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Category Cards Grid (4 Symmetrical Cards: 2x2) */}
-                <div className={`skills-category-grid ${filteredCategories.length === 1 ? 'single-category' : ''}`}>
-                    {filteredCategories.map((category, idx) => {
-                        const CategoryIcon = category.icon;
-                        return (
-                            <motion.div 
-                                key={category.id}
-                                className="skills-category-card glass-panel"
-                                initial={{ opacity: 0, y: 15 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-50px" }}
-                                transition={{ duration: 0.35, delay: idx * 0.08 }}
-                            >
-                                <div className="category-card-header">
-                                    <div className="category-icon-box">
-                                        <CategoryIcon size={18} />
-                                    </div>
-                                    <h3>{category.title}</h3>
+                            {/* LEFT COLUMN: Number, Category, Proof */}
+                            <div className="discipline-meta">
+                                <div className="discipline-num-box">
+                                    <span className="discipline-num">{discipline.number}</span>
+                                    <span className="discipline-slash">/</span>
+                                    <span className="discipline-category">{discipline.category}</span>
                                 </div>
+                                <div className="discipline-proof">
+                                    <span className="proof-label">SOURCE</span>
+                                    <p className="proof-text">{discipline.proof}</p>
+                                </div>
+                            </div>
 
-                                <div className="skills-chip-grid">
-                                    {category.skills.map((skill) => (
-                                        <motion.div 
-                                            key={skill.name}
-                                            className="skill-chip"
+                            {/* RIGHT COLUMN: Headline & Technical Grid */}
+                            <div className="discipline-content">
+                                <h3 className="discipline-headline">{discipline.headline}</h3>
+                                
+                                <div className="skills-grid">
+                                    {discipline.skills.map((skill, sIdx) => (
+                                        <div 
+                                            key={sIdx} 
+                                            className={`skill-cell ${skill.highlight ? 'skill-cell--highlight' : ''}`}
                                         >
-                                            <span className="skill-chip-icon">
-                                                {renderIcon(skill.iconName, skill.color)}
-                                            </span>
-                                            <span className="skill-chip-name">{skill.name}</span>
-                                        </motion.div>
+                                            <div className="skill-cell-top">
+                                                <span className="skill-name">{skill.name}</span>
+                                                <ArrowUpRight size={13} className="skill-arrow" />
+                                            </div>
+                                            <span className="skill-role">{skill.role}</span>
+                                        </div>
                                     ))}
                                 </div>
-                            </motion.div>
-                        );
-                    })}
+                            </div>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </section>

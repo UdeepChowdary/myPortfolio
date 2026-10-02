@@ -1,81 +1,69 @@
 import React, { Suspense } from 'react';
 import Hero from '../components/Hero';
-import TechMarquee from '../components/TechMarquee';
-import RevealOnScroll from '../components/RevealOnScroll';
+import Projects from '../components/Projects';
+import Approach from '../components/Approach';
+import About from '../components/About';
 import Skills from '../components/Skills';
 import Footer from '../components/Footer';
 import ErrorBoundary from '../components/ErrorBoundary';
 
-// Below-the-fold components imported lazily
-const Projects = React.lazy(() => import('../components/Projects'));
 const JourneyTimeline = React.lazy(() => import('../components/JourneyTimeline'));
-const GithubStats = React.lazy(() => import('../components/GithubStats'));
-const Certifications = React.lazy(() => import('../components/Certifications'));
-const Contact = React.lazy(() => import('../components/Contact'));
+const GithubStats     = React.lazy(() => import('../components/GithubStats'));
+const Contact         = React.lazy(() => import('../components/Contact'));
 
-// Simple elegant loading placeholder
 const LazyPlaceholder = () => (
-  <div style={{ height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>
-    <div className="pulse-dot" style={{ marginRight: '10px' }} /> Loading Section...
+  <div style={{ height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>
+    <div className="pulse-dot" style={{ marginRight: '10px', backgroundColor: 'var(--red)' }} /> LOADING...
   </div>
 );
 
 const Home = ({ onTerminalClick }) => (
   <>
-    {/* 1. Hero & Marquee */}
+    {/* 01 HERO */}
     <Hero onTerminalClick={onTerminalClick} />
-    <TechMarquee />
 
-    {/* 2. Featured Projects (Recruiter High-Priority) */}
+    {/* 02 SELECTED WORK */}
     <ErrorBoundary>
-      <Suspense fallback={<LazyPlaceholder />}>
-        <RevealOnScroll>
-          <Projects />
-        </RevealOnScroll>
-      </Suspense>
+      <Projects />
     </ErrorBoundary>
 
-    {/* 3. Technical Skills */}
-    <RevealOnScroll>
+    {/* 03 APPROACH */}
+    <ErrorBoundary>
+      <Approach />
+    </ErrorBoundary>
+
+    {/* 04 ABOUT */}
+    <ErrorBoundary>
+      <About />
+    </ErrorBoundary>
+
+    {/* 05 CAPABILITIES */}
+    <ErrorBoundary>
       <Skills />
-    </RevealOnScroll>
-    
-    {/* 4. Journey & Milestones */}
+    </ErrorBoundary>
+
+    {/* 06 JOURNEY */}
     <ErrorBoundary>
       <Suspense fallback={<LazyPlaceholder />}>
-        <RevealOnScroll>
-          <JourneyTimeline />
-        </RevealOnScroll>
+        <JourneyTimeline />
       </Suspense>
     </ErrorBoundary>
 
-    {/* 5. GitHub Activity & Contributions */}
+    {/* 07 OPEN SOURCE */}
     <ErrorBoundary>
       <Suspense fallback={<LazyPlaceholder />}>
-        <RevealOnScroll>
-          <GithubStats />
-        </RevealOnScroll>
+        <GithubStats />
       </Suspense>
     </ErrorBoundary>
 
-    {/* 6. Certifications */}
+    {/* 08 CONTACT */}
     <ErrorBoundary>
       <Suspense fallback={<LazyPlaceholder />}>
-        <RevealOnScroll>
-          <Certifications />
-        </RevealOnScroll>
+        <Contact />
       </Suspense>
     </ErrorBoundary>
 
-    {/* 7. Contact */}
-    <ErrorBoundary>
-      <Suspense fallback={<LazyPlaceholder />}>
-        <RevealOnScroll>
-          <Contact />
-        </RevealOnScroll>
-      </Suspense>
-    </ErrorBoundary>
-    
+    {/* 09 FOOTER */}
     <Footer onTerminalClick={onTerminalClick} />
   </>
 );

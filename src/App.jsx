@@ -6,7 +6,6 @@ import { ReactLenis } from 'lenis/react';
 import Navbar from './components/Navbar';
 import BackToTop from './components/BackToTop';
 import NotFound from './components/NotFound';
-import SpotlightBackground from './components/SpotlightBackground';
 import Home from './pages/Home';
 
 const Terminal = React.lazy(() => import('./components/Terminal'));
@@ -32,7 +31,8 @@ function App() {
         transition={{ duration: 1.5, ease: 'easeOut' }}
         className="app"
       >
-        <SpotlightBackground />
+        {/* Abstract background grid overlay */}
+        <div className="global-bg-texture"></div>
 
         <Navbar />
         <main>

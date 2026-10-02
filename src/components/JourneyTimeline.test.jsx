@@ -4,37 +4,33 @@ import { describe, it, expect } from 'vitest';
 import JourneyTimeline from './JourneyTimeline';
 
 describe('JourneyTimeline Component unit tests', () => {
-  it('renders section headers and chronological path lines', () => {
+  it('renders section headers and chronological vertical timeline', () => {
     const { container } = render(<JourneyTimeline />);
-    expect(screen.getByRole('heading', { name: /My Journey/i })).toBeInTheDocument();
-    expect(container.querySelector('.timeline-glow-line')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /JOURNEY/i })).toBeInTheDocument();
+    expect(screen.getByText('06')).toBeInTheDocument();
+    expect(container.querySelector('.timeline-line')).toBeInTheDocument();
   });
 
-  it('renders all key narrative milestones correctly', () => {
+  it('renders all key narrative milestones correctly including updated dates and OSCI 2026', () => {
     render(<JourneyTimeline />);
     
     // Check SRM AP education milestone
-    expect(screen.getByText(/SRM University AP/i)).toBeInTheDocument();
-    expect(screen.getByText(/B.Tech in CSE/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /SRM University AP/i })).toBeInTheDocument();
+    expect(screen.getByText(/B\.Tech in CSE/i)).toBeInTheDocument();
 
     // Check Derm-AI AIFT milestone
-    expect(screen.getByText(/AIFT Summer Challenge 2025/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /AIFT Summer Challenge 2025/i })).toBeInTheDocument();
 
-    // Check GSSoC 2026 milestone
-    expect(screen.getByText(/GirlScript Summer of Code \(GSSoC\) 2026/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Selected Open Source Contributor/i)[0]).toBeInTheDocument();
-  });
+    // Check GSSoC 2026 milestone (Summer 2026)
+    expect(screen.getByRole('heading', { name: /GirlScript Summer of Code \(GSSoC\) 2026/i })).toBeInTheDocument();
+    expect(screen.getByText('Summer 2026')).toBeInTheDocument();
 
-  it('alternates left and right layouts cleanly for items', () => {
-    const { container } = render(<JourneyTimeline />);
-    const items = container.querySelectorAll('.journey-item');
-    
-    expect(items.length).toBeGreaterThanOrEqual(4);
-    
-    // Assert alternating CSS alignment tags
-    expect(items[0]).toHaveClass('left');
-    expect(items[1]).toHaveClass('right');
-    expect(items[2]).toHaveClass('left');
-    expect(items[3]).toHaveClass('right');
+    // Check IEEE Genesis Hackathon 2026 (September 2026)
+    expect(screen.getByRole('heading', { name: /IEEE Genesis Hackathon 2026/i })).toBeInTheDocument();
+    expect(screen.getByText('September 2026')).toBeInTheDocument();
+
+    // Check OSCI 2026 milestone (Sep 2026 – Present)
+    expect(screen.getByRole('heading', { name: /Open Source Contribution India \(OSCI\) 2026/i })).toBeInTheDocument();
+    expect(screen.getByText('Sep 2026 – Present')).toBeInTheDocument();
   });
 });
